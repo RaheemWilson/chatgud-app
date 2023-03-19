@@ -1,25 +1,113 @@
 import { StyleSheet } from "react-native";
 import { RootStackParamList, RootStackScreenProps } from "../types";
-import { View, Text } from "../components/Themed";
-import { Box, Button, VStack } from "native-base";
+import { Box, Button, VStack, Image, Heading, Text } from "native-base";
+
+import { useAuth } from "../context/Auth";
+import { Asset, useAssets } from "expo-asset";
+import ChatSvg from "../components/svgs/Chat";
 
 export default function HomeScreen({
   navigation,
 }: RootStackScreenProps<"Home">) {
+  const { signIn } = useAuth();
+  const [assets, error] = useAssets([require("../assets/images/mascot.png")]);
+
   return (
-    <VStack
-      justifyContent={"center"}
-      alignItems={"center"}
-      borderColor={"black"}
-      flex={1}
-      p={2}
-    >
-      <Text style={styles.title}>chatgud</Text>
-      <Button marginTop={"auto"} width={"100%"}>Get Started</Button>
-      <Button width={"100%"} variant={"outline"}>
-        Have an account already
-      </Button>
-    </VStack>
+    <Box flex={1} p={0} bgColor={"brand.green"} position={"relative"}>
+      <Box right={"-180px"} top={130} width={"100%"} position={"absolute"}>
+        <Box>
+          <ChatSvg color={"#fff"} />
+          <Text
+            fontSize={"19px"}
+            style={styles.mediumText}
+            position={"absolute"}
+            textAlign={"center"}
+            top={"30%"}
+            left={"15px"}
+            color={"brand.black"}
+          >
+            {"Hi, I'm Patty, \n Your Patois Pal!"}
+          </Text>
+        </Box>
+      </Box>
+      <Box
+        background={"#fff"}
+        borderRadius={"40px"}
+        height={"60%"}
+        marginTop={"auto"}
+        borderStyle={"solid"}
+        position={"relative"}
+      >
+        {assets && (
+          <Image
+            source={{ uri: assets[0].uri }}
+            alt="ChatGud mascot"
+            height={"350px"}
+            width={"210px"}
+            position={"absolute"}
+            top={-250}
+            left={-20}
+          />
+        )}
+        <VStack alignItems={"center"} space={4} px={6} mt={20}>
+          <Heading color={"#525367"} fontSize={"36px"}>
+            👋🏾
+          </Heading>
+          <Heading color={"#525367"} style={{ fontWeight: "bold" }}>
+            Welcome to ChatGud
+          </Heading>
+          <Box>
+            <Text
+              fontSize={"16px"}
+              textAlign={"center"}
+              fontFamily={"Rubik"}
+              color={"brand.grey"}
+              style={styles.mediumText}
+            >
+              Waah Gwaan!
+            </Text>
+            <Text
+              fontSize={"16px"}
+              fontFamily={"Rubik"}
+              textAlign={"center"}
+              color={"brand.grey"}
+              lineHeight={"24px"}
+              style={styles.mediumText}
+            >
+              {
+                "Let's get you started on your journey to speaking patois like yuh bawn ah yaad!"
+              }
+            </Text>
+          </Box>
+          <Button
+            marginTop={"50px"}
+            width={"100%"}
+            borderRadius={"30px"}
+            backgroundColor={"brand.yellow"}
+            height={"50px"}
+            onPress={() => navigation.navigate('Onboarding')}
+          >
+            <Text
+              color={"brand.gray"}
+              fontSize={"16px"}
+              style={styles.mediumText}
+            >
+              GET STARTED
+            </Text>
+          </Button>
+          <Button
+            width={"100%"}
+            borderRadius={"30px"}
+            backgroundColor={"brand.mint"}
+            height={"50px"}
+          >
+            <Text color={"#009557"} fontSize={"16px"} style={styles.mediumText}>
+              I ALREADY HAVE AN ACCOUNT
+            </Text>
+          </Button>
+        </VStack>
+      </Box>
+    </Box>
   );
 }
 
@@ -32,5 +120,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "700",
+  },
+  mediumText: {
+    fontWeight: "600",
   },
 });

@@ -15,8 +15,9 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,
-          'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
-          'feather': require('../assets/fonts/feather.ttf'),
+          // 'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          // 'feather': require('../assets/fonts/feather.ttf'),
+          'Rubik': require('../assets/fonts/Rubik-VariableFont_wght.ttf')
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
