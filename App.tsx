@@ -7,11 +7,13 @@ import Navigation from "./navigation";
 import { NativeBaseProvider, extendTheme } from "native-base";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./context/Auth";
+import { LogBox } from "react-native";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
   const queryClient = new QueryClient();
+  LogBox.ignoreAllLogs(true);
 
   if (!isLoadingComplete) {
     return null;

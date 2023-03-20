@@ -1,36 +1,54 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import { RootStackParamList, RootStackScreenProps } from "../../types";
-import {
-  Box,
-  Button,
-  VStack,
-  Image,
-  Heading,
-  Text,
-  HStack,
-  Icon,
-  Progress,
-  IconButton,
-} from "native-base";
+import { RootStackScreenProps } from "../../types";
+import { Box, HStack, Icon, Progress, IconButton } from "native-base";
 
-import { Asset, useAssets } from "expo-asset";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import ChatSvg from "../../components/svgs/Chat";
+import { AntDesign } from "@expo/vector-icons";
+import StepOne from "../../components/steps/StepOne";
+import StepThree from "../../components/steps/StepThree";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { CreateUser } from "../../types/Auth";
+import StepTwo from "../../components/steps/StepTwo";
+
+const schema = z.object({
+  email: z.string().email(),
+  age: z.string(),
+  password: z.string().min(8),
+  username: z.string(),
+  nationality: z.string(),
+});
 
 export default function OnboardingScreen({
   navigation,
-}: RootStackScreenProps<"Home">) {
-  const [step, setStep] = useState(0);
-  const methods = useForm();
-  const [assets, error] = useAssets([
-    require("../../assets/images/mascot.png"),
-  ]);
+}: RootStackScreenProps<"Onboarding">) {
+  const [step, setStep] = useState(1);
+  const methods = useForm<CreateUser>({
+    defaultValues: {
+      age: "",
+      nationality: "JM",
+    },
+    resolver: zodResolver(schema),
+  });
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+  const img = require("../../assets/images/mascot.png");
+
+  const handlePress = () => {
+    if (step == 1) {
+      navigation.goBack();
+    } else {
+      setStep(step - 1);
+    }
+  };
+
   return (
     <FormProvider {...methods}>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-        <VStack flex={1} p={2} bgColor={"#fff"}>
+        <Box flex={1} py={2} px={2} bgColor={"#fff"}>
           <HStack alignItems={"center"} justifyContent={"space-between"}>
             <IconButton
               icon={
@@ -41,10 +59,11 @@ export default function OnboardingScreen({
                   color={"gray.400"}
                 />
               }
+              onPress={handlePress}
             />
             <Box w="80%" maxW="400">
               <Progress
-                value={45}
+                value={step * 50}
                 mx="4"
                 _filledTrack={{
                   bg: "brand.green",
@@ -53,35 +72,32 @@ export default function OnboardingScreen({
             </Box>
             <Box size={"30px"}></Box>
           </HStack>
-          <HStack position={"relative"} alignItems={"center"} justifyContent={"center"}>
-            {assets && (
-              <Image
-                source={{ uri: assets[0].uri }}
-                alt="ChatGud mascot"
-                height={"200px"}
-                width={"120px"}
-                top={10}
-              />
-            )}
-            <Box>
-              <ChatSvg color={"#00A15C"} height={400} />
-            </Box>
-          </HStack>
-        </VStack>
+          {step === 1 && (
+            <StepOne
+              onPress={() => {
+                setStep(step + 1);
+              }}
+              assets={img}
+            />
+          )}
+          {step === 2 && (
+            <StepTwo
+              assets={img}
+              onPress={() => {
+                setStep(step + 1);
+              }}
+            />
+          )}
+          {step === 3 && <StepThree assets={img} navigation={navigation} />}
+        </Box>
       </SafeAreaView>
     </FormProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // alignItems: "center",
-    // justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "700",
+  formLabel: {
+    fontSize: 28,
   },
   mediumText: {
     fontWeight: "600",

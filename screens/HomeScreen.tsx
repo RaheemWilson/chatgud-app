@@ -9,8 +9,7 @@ import ChatSvg from "../components/svgs/Chat";
 export default function HomeScreen({
   navigation,
 }: RootStackScreenProps<"Home">) {
-  const { signIn } = useAuth();
-  const [assets, error] = useAssets([require("../assets/images/mascot.png")]);
+  const img = require("../assets/images/mascot.png");
 
   return (
     <Box flex={1} p={0} bgColor={"brand.green"} position={"relative"}>
@@ -38,17 +37,15 @@ export default function HomeScreen({
         borderStyle={"solid"}
         position={"relative"}
       >
-        {assets && (
-          <Image
-            source={{ uri: assets[0].uri }}
-            alt="ChatGud mascot"
-            height={"350px"}
-            width={"210px"}
-            position={"absolute"}
-            top={-250}
-            left={-20}
-          />
-        )}
+        <Image
+          source={img}
+          alt="ChatGud mascot"
+          height={"350px"}
+          width={"210px"}
+          position={"absolute"}
+          top={-250}
+          left={-20}
+        />
         <VStack alignItems={"center"} space={4} px={6} mt={20}>
           <Heading color={"#525367"} fontSize={"36px"}>
             👋🏾
@@ -85,7 +82,7 @@ export default function HomeScreen({
             borderRadius={"30px"}
             backgroundColor={"brand.yellow"}
             height={"50px"}
-            onPress={() => navigation.navigate('Onboarding')}
+            onPress={() => navigation.navigate("Onboarding")}
           >
             <Text
               color={"brand.gray"}

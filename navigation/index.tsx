@@ -17,6 +17,7 @@ import HomeScreen from "../screens/HomeScreen";
 import { useAuth } from "../context/Auth";
 import { FormProvider, useForm } from "react-hook-form";
 import OnboardingScreen from "../screens/Auth/Onboarding";
+import WelcomeScreen from "../screens/WelcomeScreen";
 
 export default function Navigation({
   colorScheme,
@@ -43,11 +44,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen
-        name="Home"
-        component={HomeScreen}
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
         options={{ headerShown: false }}
-      /> */}
+      />
       {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
       {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />

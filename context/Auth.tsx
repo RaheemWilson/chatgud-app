@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 import axios, { setToken } from "../api/axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwt_decode from "jwt-decode";
-import { CurrentUser, LoginModel } from "../types/Auth";
+import { CreateUser, CurrentUser, LoginModel } from "../types/Auth";
 
 type AuthContextData = {
   authData?: CurrentUser & { exp: number };
@@ -10,6 +10,7 @@ type AuthContextData = {
   loading: boolean;
   signIn(userData: LoginModel): void;
   signOut(): void;
+  registerUser(user: CreateUser): void;
   reloadSession(): void;
 };
 
@@ -70,6 +71,21 @@ const AuthProvider = ({ children }: any) => {
     AsyncStorage.setItem("@AuthData", JSON.stringify(_authData));
   };
 
+  const registerUser = async (user: CreateUser) => {
+    try {
+      const { data: _authData } = await axios.post(`/api/auth/register`, user);
+      const decoded: any = jwt_decode(_authData.token);
+      _authData.exp = decoded.exp;
+      setAuthData(_authData);
+      setUserData(_authData);
+      setToken(_authData.token);
+      AsyncStorage.setItem("@UserData", JSON.stringify(_authData));
+      AsyncStorage.setItem("@AuthData", JSON.stringify(_authData));
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const reloadSession = async () => {
     const { data } = await axios.get(`/api/users/me`);
 
@@ -97,7 +113,7 @@ const AuthProvider = ({ children }: any) => {
 
   return (
     <AuthContext.Provider
-      value={{ authData, userData, loading, signIn, signOut, reloadSession }}
+      value={{ authData, userData, loading, signIn, signOut, reloadSession, registerUser }}
     >
       {children}
     </AuthContext.Provider>
