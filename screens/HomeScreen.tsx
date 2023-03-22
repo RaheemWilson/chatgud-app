@@ -97,6 +97,7 @@ export default function HomeScreen({
             borderRadius={"30px"}
             backgroundColor={"brand.mint"}
             height={"50px"}
+            onPress={() => navigation.navigate("Login")}
           >
             <Text color={"#009557"} fontSize={"16px"} style={styles.mediumText}>
               I ALREADY HAVE AN ACCOUNT

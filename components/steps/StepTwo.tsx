@@ -9,6 +9,7 @@ import {
   Divider,
   Image,
   Input,
+  Pressable,
 } from "native-base";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -16,7 +17,8 @@ import { StyleSheet } from "react-native";
 import CountryPicker from "react-native-country-picker-modal";
 import ChatSvg from "../svgs/Chat";
 import { useQuery } from "@tanstack/react-query";
-import { getPreference } from "../../api/Preference";
+import { getProficiency } from "../../api/Proficiency";
+import { AntDesign } from "@expo/vector-icons";
 
 type Props = {
   onPress: () => void;
@@ -32,8 +34,7 @@ const StepTwo = (props: Props) => {
   } = useFormContext();
 
   const values = watch();
-  const { data, isLoading } = useQuery(["preference"], getPreference)
-  console.log(data);
+  const { data, isLoading } = useQuery(["preference"], getProficiency);
   return (
     <>
       <HStack alignItems={"flex-start"} justifyContent={"center"} space={5}>
@@ -49,110 +50,106 @@ const StepTwo = (props: Props) => {
         <Box position={"relative"}>
           <ChatSvg color={"#00A15C"} />
           <Text
-            fontSize={"19px"}
+            fontSize={"18px"}
             style={styles.mediumText}
             position={"absolute"}
             textAlign={"center"}
-            top={"30px"}
-            left={"15px"}
+            top={"20px"}
+            left={"2px"}
             color={"#fff"}
           >
-            {"How much Jamaican patois do you know?"}
+            {"How much \n Jamaican patois do you know?"}
           </Text>
         </Box>
       </HStack>
       <Divider mt={12} mx={"auto"} width={"95%"} bg={"gray.200"} />
       <Box flex={1} px={3}>
-        <VStack space={6} mt={4}>
-          <Box>
-            <FormControl>
-              <Controller
-                name="nationality"
-                defaultValue={"JM"}
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { onChange, value } }) => {
-                  return (
-                    <Box
-                      borderWidth={"1"}
-                      borderColor={"gray.200"}
-                      borderRadius={"18px"}
-                      height={"60px"}
-                      mt={2}
-                      py={2}
-                      px={4}
-                    >
-                      <CountryPicker
-                        countryCode={value}
-                        withCountryNameButton
-                        withFlag
-                        withFilter
-                        theme={{
-                          fontFamily: "Rubik",
-                          fontSize: 18,
-                        }}
-                        withEmoji={false}
-                        onSelect={(country) => {
-                          onChange(country.cca2);
-                        }}
-                      />
-                    </Box>
-                  );
-                }}
-              />
-            </FormControl>
-          </Box>
-          <Box>
+        <Box>
+          <FormControl>
             <Controller
-              name="age"
+              name="proficiency"
               control={control}
-              render={({ field: { onChange, value, ref, ...field } }) => {
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => {
                 return (
-                  <FormControl isInvalid={"age" in errors} isRequired>
-                    <FormControl.Label>
-                      <Text
-                        fontSize={"18px"}
-                        color={"brand.black"}
-                        style={styles.mediumText}
-                      >
-                        How old are you?
-                      </Text>
-                    </FormControl.Label>
-                    <Input
-                      {...field}
-                      value={value}
-                      onChangeText={(text) => {
-                        // trigger('age')
-                        onChange(text);
-                      }}
-                      type="text"
-                      borderWidth={"1"}
-                      borderColor={"gray.200"}
-                      borderRadius={"18px"}
-                      height={"60px"}
-                      mt={2}
-                      py={2}
-                      px={4}
-                      keyboardType={"numeric"}
-                      fontSize={20}
-                      placeholder="Your age"
-                      variant={"unstyled"}
-                      _focus={{
-                        borderColor: "brand.green",
-                      }}
-                      ref={ref}
-                    />
-                    <FormControl.ErrorMessage>
-                      <Text style={styles.inValid}>
-                        Let us know your age before you continue.
-                      </Text>
-                    </FormControl.ErrorMessage>
-                  </FormControl>
+                  <VStack space={4} mt={6}>
+                    {data
+                      ?.sort((a, b) => a.preferenceOrder - b.preferenceOrder)
+                      .map((level) => {
+                        return (
+                          <Pressable
+                            borderWidth={"1"}
+                            borderRadius={"18px"}
+                            height={"80px"}
+                            mt={2}
+                            py={2}
+                            px={4}
+                            fontSize={20}
+                            variant={"unstyled"}
+                            onPress={() => onChange(level.id)}
+                            {...(value === level.id
+                              ? {
+                                  borderColor: "brand.green",
+                                  backgroundColor: "brand.mint",
+                                  color: "brand.black"
+                                }
+                              : {
+                                  borderColor: "gray.200",
+                                })}
+                          >
+                            <HStack
+                              flex={1}
+                              alignItems={"center"}
+                              space={2}
+                            >
+                              <HStack>
+                                {Array(level.preferenceOrder)
+                                  .fill(0)
+                                  .map(() => {
+                                    return (
+                                      <AntDesign
+                                        name="star"
+                                        size={18}
+                                        color="#00A15C"
+                                      />
+                                    );
+                                  })}
+                                {Array(data.length + 1 - level.preferenceOrder)
+                                  .fill(0)
+                                  .map(() => {
+                                    return (
+                                      <AntDesign
+                                        name="staro"
+                                        size={18}
+                                        color="#00A15C"
+                                      />
+                                    );
+                                  })}
+                              </HStack>
+                              <Text
+                                fontSize={"18px"}
+                                color={value === level.id ? "brand.black" : "brand.gray"}
+                                style={styles.mediumText}
+                                flex={1}
+                                flexWrap={"wrap"}
+                              >
+                                {level.description}
+                              </Text>
+                            </HStack>
+                          </Pressable>
+                        );
+                      })}
+                  </VStack>
                 );
               }}
             />
-          </Box>
-        </VStack>
+             <FormControl.ErrorMessage>
+                <Text style={styles.inValid}>
+                  Please select a preference before you continue.
+                </Text>
+              </FormControl.ErrorMessage>
+          </FormControl>
+        </Box>
         <Button
           marginTop={"auto"}
           borderColor={"gray.200"}
@@ -164,7 +161,7 @@ const StepTwo = (props: Props) => {
           fontSize={20}
           background={"brand.green"}
           onPress={async () => {
-            const result = await trigger("age");
+            const result = await trigger("proficiency");
             if (result) {
               props.onPress();
             }

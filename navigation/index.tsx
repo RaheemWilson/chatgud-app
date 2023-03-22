@@ -11,13 +11,17 @@ import { ColorSchemeName } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import { RootStackParamList, RootTabParamList } from "../types";
+import { RootStackParamList, RootTabParamList, RootTabScreenProps } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import HomeScreen from "../screens/HomeScreen";
 import { useAuth } from "../context/Auth";
 import { FormProvider, useForm } from "react-hook-form";
 import OnboardingScreen from "../screens/Auth/Onboarding";
 import WelcomeScreen from "../screens/WelcomeScreen";
+import LoginScreen from "../screens/Auth/LoginScreen";
+import { Pressable } from "native-base";
+import TabTwoScreen from "../screens/TabTwoScreen";
+import TabOneScreen from "../screens/TabOneScreen";
 
 export default function Navigation({
   colorScheme,
@@ -70,6 +74,11 @@ function AuthNavigator() {
         component={OnboardingScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
       {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
       {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
     <Stack.Screen name="Modal" component={ModalScreen} />
@@ -94,12 +103,12 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
-      {/* <BottomTab.Screen
+      <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          // tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
@@ -121,9 +130,9 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          // tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
-      /> */}
+      />
     </BottomTab.Navigator>
   );
 }

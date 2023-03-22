@@ -13,53 +13,14 @@ import {
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { KeyboardTypeOptions, StyleSheet } from "react-native";
-import CountryPicker from "react-native-country-picker-modal";
 import ChatSvg from "../svgs/Chat";
-import { useMutation } from "@tanstack/react-query";
 import { CreateUser } from "../../types/Auth";
 import { useAuth } from "../../context/Auth";
+import InputBox from "../input/Input";
 
 type Props = {
   assets: any;
   navigation: any
-};
-
-const InputBox = ({
-  value,
-  onChange,
-  placeholder,
-  type,
-  ...props
-}: {
-  value: any;
-  placeholder: string;
-  onChange: () => void;
-  type: "text" | "password";
-  keyboardType?: KeyboardTypeOptions;
-}) => {
-  return (
-    <Input
-      value={value}
-      onChangeText={onChange}
-      type={type}
-      borderWidth={"1"}
-      borderColor={"gray.200"}
-      borderRadius={"18px"}
-      height={"60px"}
-      mt={2}
-      py={2}
-      px={4}
-      fontSize={20}
-      placeholder={placeholder}
-      variant={"unstyled"}
-      _focus={{
-        borderColor: "brand.green",
-      }}
-      {...props}
-      autoCapitalize="none"
-      autoCorrect={false}
-    />
-  );
 };
 
 const StepThree = (props: Props) => {
@@ -216,6 +177,7 @@ const StepThree = (props: Props) => {
           background={"brand.green"}
           onPress={handleSubmit(async (data) => {
             try {
+              console.log(data);
               setIsLoading(true)
               await registerUser(data as CreateUser);
               props.navigation.navigate('Welcome')

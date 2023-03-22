@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import { RootStackScreenProps } from "../../types";
-import { Box, HStack, Icon, Progress, IconButton } from "native-base";
+import { Box, HStack, Icon, Progress, IconButton, Slide } from "native-base";
 
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -18,6 +18,7 @@ const schema = z.object({
   password: z.string().min(8),
   username: z.string(),
   nationality: z.string(),
+  proficiency: z.string(),
 });
 
 export default function OnboardingScreen({
@@ -63,7 +64,7 @@ export default function OnboardingScreen({
             />
             <Box w="80%" maxW="400">
               <Progress
-                value={step * 50}
+                value={(step / 3) * 100}
                 mx="4"
                 _filledTrack={{
                   bg: "brand.green",

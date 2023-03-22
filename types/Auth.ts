@@ -23,4 +23,5 @@ export interface CreateUser {
   username: string;
   age: string;
   nationality: string;
+  proficiency: string;
 }
