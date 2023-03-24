@@ -29,7 +29,7 @@ import OnboardingScreen from "../screens/Auth/Onboarding";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import { Pressable } from "native-base";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import Courses from "../screens/Courses";
 import TabOneScreen from "../screens/TabOneScreen";
 import ModalScreen from "../screens/ModalScreen";
 import BirdChat from "../screens/BirdChat";
@@ -140,7 +140,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Courses"
-        component={TabTwoScreen}
+        component={Courses}
         options={{
           title: "Courses",
           tabBarIcon: ({ color, focused }) => (
@@ -168,7 +168,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Profile"
-        component={TabTwoScreen}
+        component={Courses}
         options={{
           title: "Profile",
           tabBarIcon: ({ color, focused }) => (

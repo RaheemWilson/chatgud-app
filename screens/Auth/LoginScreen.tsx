@@ -4,7 +4,6 @@ import {
   Box,
   HStack,
   Icon,
-  Progress,
   IconButton,
   Image,
   Text,
@@ -18,12 +17,9 @@ import {
 import { useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { AntDesign } from "@expo/vector-icons";
-import StepOne from "../../components/steps/StepOne";
-import StepThree from "../../components/steps/StepThree";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { CreateUser } from "../../types/Auth";
-import StepTwo from "../../components/steps/StepTwo";
 import ChatSvg from "../../components/svgs/Chat";
 import InputBox from "../../components/input/Input";
 import { useAuth } from "../../context/Auth";
@@ -172,7 +168,7 @@ export default function LoginScreen({
                 console.log(data);
                 setIsLoading(true);
                 await signIn(data);
-                navigation.navigate("TabOne");
+                navigation.navigate("Dashboard");
               } catch (error) {
                 toast.show({
                   title: "Error",

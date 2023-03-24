@@ -13,7 +13,7 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
   const queryClient = new QueryClient();
-  LogBox.ignoreAllLogs(true);
+  // LogBox.ignoreAllLogs(true);
 
   if (!isLoadingComplete) {
     return null;
