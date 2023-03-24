@@ -172,7 +172,7 @@ export default function LoginScreen({
                 console.log(data);
                 setIsLoading(true);
                 await signIn(data);
-                navigation.navigate("Welcome");
+                navigation.navigate("TabOne");
               } catch (error) {
                 toast.show({
                   title: "Error",

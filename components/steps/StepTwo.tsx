@@ -78,7 +78,6 @@ const StepTwo = (props: Props) => {
                       .map((level) => {
                         return (
                           <Pressable
-                            borderWidth={"1"}
                             borderRadius={"18px"}
                             height={"80px"}
                             mt={2}
@@ -89,12 +88,14 @@ const StepTwo = (props: Props) => {
                             onPress={() => onChange(level.id)}
                             {...(value === level.id
                               ? {
-                                  borderColor: "brand.green",
-                                  backgroundColor: "brand.mint",
-                                  color: "brand.black"
+                                  borderColor: "brand.yellow",
+                                  backgroundColor: "rgba(254,210,79, 0.2)",
+                                  // color: "brand.black",
+                                  borderWidth: 2
                                 }
                               : {
                                   borderColor: "gray.200",
+                                  borderWidth: 1
                                 })}
                           >
                             <HStack
@@ -110,7 +111,7 @@ const StepTwo = (props: Props) => {
                                       <AntDesign
                                         name="star"
                                         size={18}
-                                        color="#00A15C"
+                                        color="rgba(254,210,79, 1)"
                                       />
                                     );
                                   })}
@@ -121,7 +122,7 @@ const StepTwo = (props: Props) => {
                                       <AntDesign
                                         name="staro"
                                         size={18}
-                                        color="#00A15C"
+                                        color="rgba(254,210,79, 1)"
                                       />
                                     );
                                   })}

@@ -2,7 +2,6 @@ import {
   Box,
   VStack,
   FormControl,
-  Input,
   Button,
   Text,
   HStack,
@@ -12,7 +11,7 @@ import {
 } from "native-base";
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { KeyboardTypeOptions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import ChatSvg from "../svgs/Chat";
 import { CreateUser } from "../../types/Auth";
 import { useAuth } from "../../context/Auth";
@@ -182,6 +181,7 @@ const StepThree = (props: Props) => {
               await registerUser(data as CreateUser);
               props.navigation.navigate('Welcome')
             } catch (error) {
+              console.log(error);
               toast.show({
                 title: "Error",
                 description: `There was an error creating your account`,
