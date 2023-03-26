@@ -168,7 +168,7 @@ export default function LoginScreen({
                 console.log(data);
                 setIsLoading(true);
                 await signIn(data);
-                navigation.navigate("Dashboard");
+                navigation.navigate("Tabs");
               } catch (error) {
                 toast.show({
                   title: "Error",

@@ -58,7 +58,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{
+      contentStyle: {
+        backgroundColor: "#fff"
+      }
+    }}>
       <Stack.Screen
         name="Tabs"
         component={BottomTabNavigator}
@@ -119,6 +123,7 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
         tabBarStyle: {
           borderRadius: 50,
+          // position: 'absolute'
         },
       }}
     >

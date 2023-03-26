@@ -1,4 +1,9 @@
-import { Dimensions, ImageSourcePropType, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  ImageSourcePropType,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
 
 import { useQuery } from "@tanstack/react-query";
 import { getCategories } from "../api/Category";
@@ -27,24 +32,29 @@ export default function Courses() {
   const [activeSlide, setActiveSlide] = useState(0);
   useRefreshOnFocus(refetch);
   const width = Dimensions.get("window").width;
-  const img = require(`../assets/images/category/high-five.png`);
 
-  const Item = ({ category, image }: { category: Category, image: ImageSourcePropType }) => {
+  const Item = ({
+    category,
+    image,
+  }: {
+    category: Category;
+    image: ImageSourcePropType;
+  }) => {
     return (
       <Box
-        flex={0.95}
-        background={"#fff"}
-        justifyContent={"space-around"}
+        background={"transparent"}
+        justifyContent={"space-between"}
         alignItems={"center"}
-        p={4}
+        px={4}
+        flex={1}
       >
-        <Box>
+        <Box justifyContent={"center"} flex={1}>
           <Image source={image} alt={category.name} size="225" />
         </Box>
         <VStack
           bgColor={"brand.green"}
           borderRadius={`20px`}
-          height={"300px"}
+          height={"320px"}
           width={"90%"}
           justifyContent={"flex-start"}
           alignItems={"center"}
@@ -54,7 +64,7 @@ export default function Courses() {
           <Heading fontFamily={"Rubik-Medium"} fontSize={"24px"} color={"#fff"}>
             {`Course: ${category.name}`}
           </Heading>
-          <Box w="100%" maxW="400" mb={6}>
+          <Box w="100%" mb={6}>
             <Text fontFamily={"Rubik-Medium"} textAlign={"center"} py={1}>
               2 / 8 UNITS
             </Text>
@@ -92,26 +102,41 @@ export default function Courses() {
     );
   };
   return (
-    <Box style={{ flex: 1 }} bg={"#fff"}>
-      <Carousel
-        loop
-        width={width}
-        autoPlay={false}
-        data={
-          categories?.sort((a, b) => a.categoryOrder - b.categoryOrder) ?? []
-        }
-        onSnapToItem={(index) => setActiveSlide(index)}
-        renderItem={({ index, item }) => {
-          return <Item category={item} image={categoryImages[item.image]} />;
-        }}
-      />
-      <Box borderWidth={1} w={"full"} height={"100%"}>
-        <Dots
-          length={5}
-          active={activeSlide}
+    // <SafeAreaView style={{ flex: 1 }}>
+    <Box
+      display={"flex"}
+      flexDir={"column"}
+      justifyContent={"space-between"}
+      alignItems={"space-between"}
+      flex={1}
+      bg={"#fff"}
+    >
+      <Box flex={0.97}>
+        <Carousel
+          // loop={false}
+          width={width}
+          autoPlay={false}
+          defaultIndex={0}
+          mode="parallax"
+          modeConfig={{
+            parallaxScrollingScale: 0.97,
+            parallaxAdjacentItemScale: 0.9,
+            parallaxScrollingOffset: 65
+          }}
+          data={
+            categories?.sort((a, b) => a.categoryOrder - b.categoryOrder) ?? []
+          }
+          onSnapToItem={(index) => setActiveSlide(index)}
+          renderItem={({ index, item }) => {
+            return <Item category={item} image={categoryImages[item.image]} />;
+          }}
         />
       </Box>
+      <Box w={"full"} flex={0.1} alignItems={"center"} justifyContent={"center"}>
+        <Dots length={5} active={activeSlide} activeColor={"#00A15C"} />
+      </Box>
     </Box>
+    // </SafeAreaView>
   );
 }
 

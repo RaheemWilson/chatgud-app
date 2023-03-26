@@ -45,6 +45,8 @@ export default function useCachedResources() {
           require("../assets/images/category/schedule.png"),
           require("../assets/images/category/argument.png"),
           require("../assets/images/category/trolley.png"),
+          require("../assets/images/bg.png"),
+          require("../assets/images/Path3.png"),
         ]);
         await Promise.all([fonts, ...images]);
       } catch (e) {
