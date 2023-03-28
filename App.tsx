@@ -33,8 +33,8 @@ export default function App() {
   const theme = extendTheme({
     colors: newColorTheme,
     fonts: {
-      heading: "Rubik",
-      body: "Rubik",
+      heading: "Rubik-Bold",
+      body: "Rubik-Medium",
       mono: "Rubik",
     },
     fontConfig: {
