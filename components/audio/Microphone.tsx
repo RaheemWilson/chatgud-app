@@ -1,11 +1,15 @@
 import { Box, Text, VStack } from "native-base";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import LottieView from "lottie-react-native";
 import type AnimatedLottieView from "lottie-react-native";
 import { type AVPlaybackStatus, Audio } from "expo-av";
 import { Pressable } from "react-native";
+import Device from "../../constants/Layout";
 
-type Props = {};
+type Props = {
+  setSound: Function;
+  onStart?: Function;
+};
 
 const Microphone = (props: Props) => {
   const animation = useRef<AnimatedLottieView>(null);
@@ -24,6 +28,7 @@ const Microphone = (props: Props) => {
       const { recording, status } = await Audio.Recording.createAsync(
         Audio.RecordingOptionsPresets.HIGH_QUALITY
       );
+      props.onStart && props.onStart()
       animation.current?.play();
       setIsRecording(true);
       setRecording(recording);
@@ -41,16 +46,10 @@ const Microphone = (props: Props) => {
       allowsRecordingIOS: false,
     });
     const uri = recording.getURI();
-    const sound = new Audio.Sound();
-
-    await sound.loadAsync({
-      uri,
-    });
-
-    await sound.playAsync();
+    props.setSound(uri);
   }
   return (
-    <VStack alignItems={"center"}>
+    <VStack alignItems={"center"} justifyContent={"center"} zIndex={1}>
       <Pressable
         delayLongPress={0}
         onLongPress={async () => {
@@ -59,22 +58,25 @@ const Microphone = (props: Props) => {
         onPressOut={async () => {
           await stopRecording();
         }}
+        style={{ overflow: "visible" }}
       >
         <LottieView
           ref={animation}
           loop
           style={{
-            height: 130,
-            borderWidth: 1,
-            backgroundColor: "transparent",
-            padding: 0
+            aspectRatio: 1.2,
+            height: 120,
+            width: 120,
+            marginRight: -45,
+            overflow: "visible",
           }}
-          source={require("../../assets/images/lottie/microphone.json")}
-          autoSize
+          source={require("../../assets/images/lottie/trimmed-microphone.json")}
           resizeMode="cover"
         />
       </Pressable>
-      <Text fontSize={"16px"} color={"brand.orange"}>{isRecording ? "Release to stop recording" : "Hold to speak"}</Text>
+      <Text fontSize={"16px"} color={"brand.orange"}>
+        {isRecording ? "Release to stop recording" : "Hold to speak"}
+      </Text>
     </VStack>
   );
 };

@@ -59,9 +59,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{
-      contentStyle: {
-        backgroundColor: "#fff"
-      }
+      // contentStyle: {
+      //   backgroundColor: "#fff"
+      // }
     }}>
       <Stack.Screen
         name="Tabs"
@@ -169,6 +169,8 @@ function BottomTabNavigator() {
               color={color}
             />
           ),
+          headerShown: false,
+          unmountOnBlur: true
         }}
       />
       <BottomTab.Screen

@@ -12,11 +12,10 @@ export default function HomeScreen({
 }: RootStackScreenProps<"Home">) {
   const img = require("../assets/images/mascot.png");
   const bg = require("../assets/images/bg.png");
-  const whiteBg = require("../assets/images/Path3.png");
 
   return (
     <ImageBackground source={bg} style={styles.image}>
-      <Box flex={1} p={0} bg={bg} position={"relative"}>
+      <Box flex={1} p={0} position={"relative"}>
         <Box right={"-180px"} top={130} width={"100%"} position={"absolute"}>
           <Box>
             <ChatSvg color={"#fff"} />

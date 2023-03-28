@@ -17,7 +17,6 @@ const AudioPlayback = (props: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0.0);
 
-
   const _onPlaybackStatusUpdate = (playbackStatus: AVPlaybackStatus) => {
     //@ts-ignore
     setTimeRemaining(playbackStatus?.positionMillis);
@@ -50,7 +49,7 @@ const AudioPlayback = (props: Props) => {
       playsInSilentModeIOS: true,
     });
     const { sound } = await Audio.Sound.createAsync(
-      require("../../assets/audio/A89.mp3"),
+      { uri: props.uri },
       { shouldPlay: false, progressUpdateIntervalMillis: 100 },
       _onPlaybackStatusUpdate
     );

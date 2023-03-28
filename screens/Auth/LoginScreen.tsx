@@ -86,7 +86,7 @@ export default function LoginScreen({
                 left={"15px"}
                 color={"#fff"}
               >
-                {"Wah gwan, Welcome back!"}
+                {"Wah gwan, \n Welcome back!"}
               </Text>
             </Box>
           </HStack>
