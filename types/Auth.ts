@@ -15,6 +15,7 @@ export interface User {
   gender: string;
   age: number;
   nationality: string;
+  dateCreated: Date | string
 }
 
 export interface CreateUser {

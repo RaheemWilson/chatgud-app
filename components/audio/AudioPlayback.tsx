@@ -74,7 +74,7 @@ const AudioPlayback = (props: Props) => {
       bgColor={props.color}
       alignItems={"center"}
       justifyContent={"space-between"}
-      space={4}
+      space={2}
       px={2}
     >
       <IconButton
@@ -83,7 +83,7 @@ const AudioPlayback = (props: Props) => {
         }}
         bg={"#fff"}
         variant={"solid"}
-        size={"46px"}
+        size={"44px"}
         _icon={
           !isPlaying
             ? {
@@ -105,7 +105,6 @@ const AudioPlayback = (props: Props) => {
           ref={animation}
           loop
           style={{
-            // width: 150,
             height: 160,
             backgroundColor: "transparent",
           }}
@@ -113,7 +112,7 @@ const AudioPlayback = (props: Props) => {
         />
       </Box>
       <Box w="60px">
-        <Text color={"#fff"} fontFamily={"Rubik-Regular"}>
+        <Text color={"#fff"} fontFamily={"Rubik-Medium"} fontSize={16} textAlign={"center"}>
           {isNaN(parseFloat((timeRemaining / 60000).toFixed(2)))
             ? "0.00"
             : (timeRemaining / 60000).toFixed(2)}

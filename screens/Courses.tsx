@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  ImageBackground,
   ImageSourcePropType,
   SafeAreaView,
   StyleSheet,
@@ -29,9 +30,12 @@ export default function Courses() {
     isLoading,
     refetch,
   } = useQuery(["preference"], getCategories);
+
   const [activeSlide, setActiveSlide] = useState(0);
   useRefreshOnFocus(refetch);
+
   const width = Dimensions.get("window").width;
+  const bg = require("../assets/images/white-bg.png");
 
   const Item = ({
     category,
@@ -102,14 +106,12 @@ export default function Courses() {
     );
   };
   return (
-    // <SafeAreaView style={{ flex: 1 }}>
     <Box
       display={"flex"}
       flexDir={"column"}
       justifyContent={"space-between"}
       alignItems={"space-between"}
       flex={1}
-      bg={"#fff"}
     >
       <Box flex={0.97}>
         <Carousel
@@ -121,7 +123,7 @@ export default function Courses() {
           modeConfig={{
             parallaxScrollingScale: 0.97,
             parallaxAdjacentItemScale: 0.9,
-            parallaxScrollingOffset: 65
+            parallaxScrollingOffset: 65,
           }}
           data={
             categories?.sort((a, b) => a.categoryOrder - b.categoryOrder) ?? []
@@ -132,11 +134,15 @@ export default function Courses() {
           }}
         />
       </Box>
-      <Box w={"full"} flex={0.1} alignItems={"center"} justifyContent={"center"}>
+      <Box
+        w={"full"}
+        flex={0.1}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
         <Dots length={5} active={activeSlide} activeColor={"#00A15C"} />
       </Box>
     </Box>
-    // </SafeAreaView>
   );
 }
 
@@ -154,5 +160,10 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
   },
 });

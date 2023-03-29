@@ -33,6 +33,7 @@ import Courses from "../screens/Courses";
 import TabOneScreen from "../screens/TabOneScreen";
 import ModalScreen from "../screens/ModalScreen";
 import BirdChat from "../screens/BirdChat";
+import ProfileScreen from "../screens/ProfileScreen";
 
 export default function Navigation({
   colorScheme,
@@ -175,7 +176,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Profile"
-        component={Courses}
+        component={ProfileScreen}
         options={{
           title: "Profile",
           tabBarIcon: ({ color, focused }) => (
