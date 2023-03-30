@@ -31,7 +31,7 @@ import LoginScreen from "../screens/Auth/LoginScreen";
 import { Pressable } from "native-base";
 import Courses from "../screens/Courses";
 import TabOneScreen from "../screens/TabOneScreen";
-import ModalScreen from "../screens/ModalScreen";
+import EditProfileScreen from "../screens/EditProfileSreen";
 import BirdChat from "../screens/BirdChat";
 import ProfileScreen from "../screens/ProfileScreen";
 
@@ -40,13 +40,13 @@ export default function Navigation({
 }: {
   colorScheme: ColorSchemeName;
 }) {
-  const { authData, loading } = useAuth();
+  const { userData } = useAuth();
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      {authData ? <RootNavigator /> : <AuthNavigator />}
+      {userData ? <RootNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
@@ -59,11 +59,13 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator screenOptions={{
-      // contentStyle: {
-      //   backgroundColor: "#fff"
-      // }
-    }}>
+    <Stack.Navigator
+      screenOptions={{
+        contentStyle: {
+          backgroundColor: "#fff",
+        },
+      }}
+    >
       <Stack.Screen
         name="Tabs"
         component={BottomTabNavigator}
@@ -76,7 +78,13 @@ function RootNavigator() {
       />
       {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfileScreen}
+          options={{
+            title: "Edit Profile",
+          }}
+        /> 
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -101,9 +109,6 @@ function AuthNavigator() {
         options={{ headerShown: false }}
       />
       {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -123,8 +128,9 @@ function BottomTabNavigator() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         tabBarStyle: {
-          borderRadius: 50,
+          // borderRadius: 50,
           // position: 'absolute'
+          paddingTop: 10,
         },
       }}
     >
@@ -171,7 +177,7 @@ function BottomTabNavigator() {
             />
           ),
           headerShown: false,
-          unmountOnBlur: true
+          unmountOnBlur: true,
         }}
       />
       <BottomTab.Screen
@@ -186,6 +192,8 @@ function BottomTabNavigator() {
               color={color}
             />
           ),
+          headerShown: false,
+          unmountOnBlur: true,
         }}
       />
     </BottomTab.Navigator>

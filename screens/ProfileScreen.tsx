@@ -1,17 +1,29 @@
 import { StyleSheet } from "react-native";
 
-import { Avatar, Box, VStack, Text, Divider, Button } from "native-base";
+import {
+  Avatar,
+  Box,
+  VStack,
+  Text,
+  Divider,
+  Button,
+  Pressable,
+  HStack,
+} from "native-base";
 import { useAuth } from "../context/Auth";
 import { format, parseISO } from "date-fns";
+import Profile from "../components/svgs/Profile";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import Content from "../components/svgs/Content";
+import { RootStackScreenProps } from "../types";
 
-export default function ProfileScreen() {
+export default function ProfileScreen({ navigation }: RootStackScreenProps<"Profile">) {
   const { userData, signOut } = useAuth();
   const { user } = userData!;
-  console.log(JSON.stringify(userData, null, 2));
   return (
     <Box style={styles.container} bg={"#fff"} py={8} px={4}>
-      <VStack alignItems={"center"} space={4} flex={1} w={"full"}>
-        <Avatar bg={"brand.green"} size={"xl"}>
+      <VStack alignItems={"center"} space={4} h="90%" w="full">
+        <Avatar bg={"brand.orange"} size={"xl"}>
           <Text color={"#fff"} fontFamily={"Rubik-SemiBold"} fontSize={36}>
             {"RW"}
           </Text>
@@ -28,7 +40,31 @@ export default function ProfileScreen() {
             {format(parseISO(user.dateCreated as string), `MMM dd, yyyy`)}
           </Text>
         </Box>
-        <Divider w="90%" mx="auto" bg={"gray.200"} mt={5} />
+        <Divider mx="auto" bg={"gray.200"} mt={5} />
+        <VStack w="full" divider={<Divider mx="auto" bg={"gray.200"} mt={5} />}>
+          <Pressable onPress={() => navigation.navigate("EditProfile")}>
+            <HStack justifyContent={"space-between"} alignItems={"center"}>
+              <HStack space={3} alignItems={"center"}>
+                <Profile />
+                <Text color={"brand.gray"} fontSize={"18px"}>
+                  Edit Profile
+                </Text>
+              </HStack>
+              <Ionicons name="chevron-forward" size={24} color="#505168" />
+            </HStack>
+          </Pressable>
+          <Pressable py={2}>
+            <HStack justifyContent={"space-between"} alignItems={"center"}>
+              <HStack space={5} alignItems={"center"}>
+                <Content />
+                <Text color={"brand.gray"} fontSize={"18px"}>
+                  Learn More
+                </Text>
+              </HStack>
+              <Ionicons name="chevron-forward" size={24} color="#505168" />
+            </HStack>
+          </Pressable>
+        </VStack>
         <Button
           marginTop={"auto"}
           borderColor={"brand.green"}
@@ -40,9 +76,13 @@ export default function ProfileScreen() {
           px={4}
           fontSize={20}
           width={"full"}
+          // bg={"brand.mint"}
           color={"brand.green"}
-          variant={"outline"}
+          variant={"unstyle"}
           onPress={async () => await signOut()}
+          _pressed={{
+            backgroundColor: "brand.mint",
+          }}
         >
           <Text fontSize={20} color={"brand.green"}>
             Sign out
@@ -57,7 +97,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
   },
   title: {
     fontSize: 20,

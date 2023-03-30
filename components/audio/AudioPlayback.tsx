@@ -8,6 +8,7 @@ import { FontAwesome5, Foundation } from "@expo/vector-icons";
 
 type Props = {
   color: string;
+  darkColor: string;
   uri: string;
 };
 
@@ -84,6 +85,7 @@ const AudioPlayback = (props: Props) => {
         bg={"#fff"}
         variant={"solid"}
         size={"44px"}
+        borderRadius={"9px"}
         _icon={
           !isPlaying
             ? {
@@ -95,7 +97,7 @@ const AudioPlayback = (props: Props) => {
             : {
                 as: FontAwesome5,
                 name: "pause",
-                size: 6,
+                // size: 6,
                 color: props.color,
               }
         }
@@ -112,7 +114,7 @@ const AudioPlayback = (props: Props) => {
         />
       </Box>
       <Box w="60px">
-        <Text color={"#fff"} fontFamily={"Rubik-Medium"} fontSize={16} textAlign={"center"}>
+        <Text color={"#fff"} fontFamily={"Rubik-Medium"} fontSize={14} textAlign={"center"}>
           {isNaN(parseFloat((timeRemaining / 60000).toFixed(2)))
             ? "0.00"
             : (timeRemaining / 60000).toFixed(2)}

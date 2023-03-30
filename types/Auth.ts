@@ -26,3 +26,11 @@ export interface CreateUser {
   nationality: string;
   proficiency: string;
 }
+
+export interface UpdateUser {
+  username: string;
+  age: string;
+  nationality: string;
+}
+
+

@@ -2,16 +2,16 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 import axios, { setToken } from "../api/axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwt_decode from "jwt-decode";
-import { CreateUser, CurrentUser, LoginModel } from "../types/Auth";
+import { CreateUser, CurrentUser, LoginModel, UpdateUser } from "../types/Auth";
 
 type AuthContextData = {
-  authData?: CurrentUser & { exp: number };
-  userData?: CurrentUser;
+  userData?: CurrentUser & { exp: number };
   loading: boolean;
   signIn(userData: LoginModel): void;
   signOut(): void;
   registerUser(user: CreateUser): void;
   reloadSession(): void;
+  updateUser(user: UpdateUser): void;
 };
 
 //Create the Auth Context with the data type specified
@@ -19,8 +19,7 @@ type AuthContextData = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider = ({ children }: any) => {
-  const [authData, setAuthData] = useState<CurrentUser & { exp: number }>();
-  const [userData, setUserData] = useState<CurrentUser>();
+  const [userData, setUserData] = useState<CurrentUser & { exp: number }>();
 
   //the AuthContext start with loading equals true
   //and stay like this, until the data be load from Async Storage
@@ -34,23 +33,18 @@ const AuthProvider = ({ children }: any) => {
   }, []);
 
   async function verifySession() {
-    if (Date.now() / 1000 < authData?.exp!) {
+    if (Date.now() / 1000 < userData?.exp!) {
       await signOut();
     }
   }
   async function loadStorageData(): Promise<void> {
     try {
-      const authDataSerialized = await AsyncStorage.getItem("@AuthData");
       const userDataSerialized = await AsyncStorage.getItem("@UserData");
-      if (authDataSerialized) {
-        const _authData = JSON.parse(authDataSerialized);
-        const decoded: any = jwt_decode(_authData.token);
-        _authData.exp = decoded.exp;
-        setToken(_authData.token);
-        setAuthData(_authData);
-      }
       if (userDataSerialized) {
         const _userData = JSON.parse(userDataSerialized);
+        const decoded: any = jwt_decode(_userData.token);
+        _userData.exp = decoded.exp;
+        setToken(_userData.token);
         setUserData(_userData);
       }
     } catch (error) {
@@ -60,60 +54,80 @@ const AuthProvider = ({ children }: any) => {
   }
 
   const signIn = async (userData: LoginModel) => {
-    const { data: _authData } = await axios.post(`/api/auth/login`, userData);
+    const { data: _userData } = await axios.post(`/api/auth/login`, userData);
 
-    const decoded: any = jwt_decode(_authData.token);
-    _authData.exp = decoded.exp;
-    setAuthData(_authData);
-    setUserData(_authData);
-    setToken(_authData.token);
-    AsyncStorage.setItem("@UserData", JSON.stringify(_authData));
-    AsyncStorage.setItem("@AuthData", JSON.stringify(_authData));
+    const decoded: any = jwt_decode(_userData.token);
+    _userData.exp = decoded.exp;
+    setUserData(_userData);
+
+    console.log(_userData);
+    setToken(_userData.token);
+    AsyncStorage.setItem("@UserData", JSON.stringify(_userData));
   };
 
   const registerUser = async (user: CreateUser) => {
     try {
-      const { data: _authData } = await axios.post(`/api/auth/register`, user);
-      const decoded: any = jwt_decode(_authData.token);
-      _authData.exp = decoded.exp;
-      setAuthData(_authData);
-      setUserData(_authData);
-      setToken(_authData.token);
-      AsyncStorage.setItem("@UserData", JSON.stringify(_authData));
-      AsyncStorage.setItem("@AuthData", JSON.stringify(_authData));
+      const { data: _userData } = await axios.post(`/api/auth/register`, user);
+      const decoded: any = jwt_decode(_userData.token);
+      _userData.exp = decoded.exp;
+      setUserData(_userData);
+      setToken(_userData.token);
+      AsyncStorage.setItem("@UserData", JSON.stringify(_userData));
     } catch (error) {
       throw error;
     }
   };
 
-  const reloadSession = async () => {
-    const { data } = await axios.get(`/api/users/me`);
+  const updateUser = async (user: UpdateUser) => {
+    const { data } = await axios.put(`/api/user`, user);
 
-    const { token, exp } = authData!;
+    const { token, exp } = userData!;
     const currentData = {
       user: data!,
       token,
       exp,
     };
 
-    setAuthData(currentData);
+    console.log(data);
+
     setUserData(currentData);
     setToken(currentData.token);
     AsyncStorage.setItem("@UserData", JSON.stringify(currentData));
-    AsyncStorage.setItem("@AuthData", JSON.stringify(currentData));
+  };
+
+  const reloadSession = async () => {
+    const { data } = await axios.get(`/api/users/me`);
+
+    const { token, exp } = userData!;
+    const currentData = {
+      user: data!,
+      token,
+      exp,
+    };
+
+    setUserData(currentData);
+    setToken(currentData.token);
+    AsyncStorage.setItem("@UserData", JSON.stringify(currentData));
   };
 
   const signOut = async () => {
     await AsyncStorage.removeItem("@AuthData");
     await AsyncStorage.removeItem("@UserData");
-    setAuthData(undefined);
     setUserData(undefined);
     setToken("");
   };
 
   return (
     <AuthContext.Provider
-      value={{ authData, userData, loading, signIn, signOut, reloadSession, registerUser }}
+      value={{
+        userData,
+        loading,
+        signIn,
+        signOut,
+        reloadSession,
+        registerUser,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
