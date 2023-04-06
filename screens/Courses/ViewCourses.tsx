@@ -7,8 +7,8 @@ import {
 } from "react-native";
 
 import { useQuery } from "@tanstack/react-query";
-import { getCategories } from "../api/Category";
-import { useRefreshOnFocus } from "../hooks/useRefreshOnFocus";
+import { getCategories, getUserCategories } from "../../api/Category";
+import { useRefreshOnFocus } from "../../hooks/useRefreshOnFocus";
 import {
   Box,
   Text,
@@ -18,30 +18,32 @@ import {
   Progress,
   Button,
 } from "native-base";
-import { Category } from "../types/Category";
+import { CompletedCategory } from "../../types/Category";
 import Dots from "react-native-dots-pagination";
 import Carousel from "react-native-reanimated-carousel";
 import { useState } from "react";
-import { categoryImages } from "../constants/CategoryImages";
+import { categoryImages } from "../../constants/CategoryImages";
+import { RootStackScreenProps, RootTabScreenProps } from "../../types";
 
-export default function Courses() {
-  const {
-    data: categories,
-    isLoading,
-    refetch,
-  } = useQuery(["preference"], getCategories);
+export default function ViewCourses({
+  navigation,
+}: RootStackScreenProps<"ViewCourses">) {
+  const { data: userCategories, refetch: fetchUserCategories } = useQuery(
+    ["user-categories"],
+    getUserCategories
+  );
 
   const [activeSlide, setActiveSlide] = useState(0);
-  useRefreshOnFocus(refetch);
+  useRefreshOnFocus(fetchUserCategories);
 
   const width = Dimensions.get("window").width;
-  const bg = require("../assets/images/white-bg.png");
+  const bg = require("../../assets/images/white-bg.png");
 
   const Item = ({
     category,
     image,
   }: {
-    category: Category;
+    category: CompletedCategory;
     image: ImageSourcePropType;
   }) => {
     return (
@@ -53,7 +55,7 @@ export default function Courses() {
         flex={1}
       >
         <Box justifyContent={"center"} flex={1}>
-          <Image source={image} alt={category.name} size="225" />
+          <Image source={image} alt={category.category.name} size="225" />
         </Box>
         <VStack
           bgColor={"brand.green"}
@@ -66,14 +68,25 @@ export default function Courses() {
           p={4}
         >
           <Heading fontFamily={"Rubik-Medium"} fontSize={"24px"} color={"#fff"}>
-            {`Course: ${category.name}`}
+            {`Course: ${category.category.name}`}
           </Heading>
           <Box w="100%" mb={6}>
-            <Text fontFamily={"Rubik-Medium"} textAlign={"center"} py={1}>
-              2 / 8 UNITS
+            <Text
+              fontFamily={"Rubik-Medium"}
+              textAlign={"center"}
+              py={2}
+              fontSize={"16px"}
+              color={"rgba(255, 255, 255, 0.8)"}
+            >
+              <Text fontSize={"20px"} color={"#fff"}>
+                {category.completed}
+              </Text>
+              {`/${category.category.totalActivites}`} UNITS
             </Text>
             <Progress
-              value={(1 / 3) * 100}
+              value={
+                (category.completed / category.category.totalActivites) * 100
+              }
               mx="4"
               height={"15px"}
               _filledTrack={{
@@ -82,7 +95,7 @@ export default function Courses() {
             />
           </Box>
           <Text textAlign={"center"} color={"#fff"} style={styles.title}>
-            {category.description} blah blah blah blah blah blah blah
+            {category.category.description} blah blah blah blah blah blah blah
           </Text>
           <Button
             marginTop={"auto"}
@@ -95,10 +108,15 @@ export default function Courses() {
             fontSize={20}
             w={"full"}
             background={"brand.yellow"}
-            // onPress={}
+            onPress={() =>
+              navigation.navigate("Course", {
+                completed: category.completed,
+                categoryId: category.categoryId,
+              } as any)
+            }
           >
             <Text fontSize={20} color={"#fff"}>
-              Continue
+              {category.completed > 0 ? "Continue learning" : "Start learning"}
             </Text>
           </Button>
         </VStack>
@@ -126,11 +144,18 @@ export default function Courses() {
             parallaxScrollingOffset: 65,
           }}
           data={
-            categories?.sort((a, b) => a.categoryOrder - b.categoryOrder) ?? []
+            userCategories?.sort(
+              (a, b) => a.category.categoryOrder - b.category.categoryOrder
+            ) ?? []
           }
           onSnapToItem={(index) => setActiveSlide(index)}
           renderItem={({ index, item }) => {
-            return <Item category={item} image={categoryImages[item.image]} />;
+            return (
+              <Item
+                category={item}
+                image={categoryImages[item.category.image]}
+              />
+            );
           }}
         />
       </Box>

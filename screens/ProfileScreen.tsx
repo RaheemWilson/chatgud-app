@@ -30,7 +30,7 @@ export default function ProfileScreen({ navigation }: RootStackScreenProps<"Prof
         </Avatar>
         <Box alignItems={"center"}>
           <Text fontSize={18} color={"brand.gray"} fontFamily={"Rubik-Medium"}>
-            @{user.username}
+            ~{user.username}
           </Text>
           <Text fontSize={18} color={"brand.gray"} fontFamily={"Rubik-Medium"}>
             {user.email}

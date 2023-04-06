@@ -29,11 +29,12 @@ import OnboardingScreen from "../screens/Auth/Onboarding";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import { Pressable } from "native-base";
-import Courses from "../screens/Courses";
+import ViewCourses from "../screens/Courses/ViewCourses";
 import TabOneScreen from "../screens/TabOneScreen";
 import EditProfileScreen from "../screens/EditProfileSreen";
 import BirdChat from "../screens/BirdChat";
 import ProfileScreen from "../screens/ProfileScreen";
+import CourseScreen from "../screens/Courses/Course";
 
 export default function Navigation({
   colorScheme,
@@ -76,6 +77,11 @@ function RootNavigator() {
         component={WelcomeScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Course"
+        component={CourseScreen}
+        options={{ headerShown: false }}
+      />
       {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
@@ -84,7 +90,7 @@ function RootNavigator() {
           options={{
             title: "Edit Profile",
           }}
-        /> 
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -112,6 +118,24 @@ function AuthNavigator() {
     </Stack.Navigator>
   );
 }
+
+const CourseStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ViewCourses"
+        component={ViewCourses}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Course"
+        component={CourseScreen}
+        options={{ headerShown: false }}
+      />
+      {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
+    </Stack.Navigator>
+  );
+};
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -152,8 +176,9 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Courses"
-        component={Courses}
+        component={CourseStack}
         options={{
+          headerShown: false,
           title: "Courses",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons

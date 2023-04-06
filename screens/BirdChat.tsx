@@ -65,7 +65,7 @@ export default function BirdChat() {
             {sound && (
               <>
                 <Box alignSelf={"flex-end"}>
-                  <AudioPlayback uri={sound} color="brand.green" />
+                  <AudioPlayback uri={sound} color="brand.green" darkColor={"#0000"} />
                 </Box>
                 <Box
                   w={"285px"}

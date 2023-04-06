@@ -1,3 +1,5 @@
+import { Proficiency } from "./Proficiency";
+
 export type LoginModel = {
   email: string;
   password: string;
@@ -15,7 +17,9 @@ export interface User {
   gender: string;
   age: number;
   nationality: string;
-  dateCreated: Date | string
+  dateCreated: Date | string;
+  proficiency: Proficiency;
+  proficiencyId: string;
 }
 
 export interface CreateUser {

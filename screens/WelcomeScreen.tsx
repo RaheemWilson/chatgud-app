@@ -48,8 +48,7 @@ export default function WelcomeScreen({
           mt={2}
           w="full"
           background={"brand.green"}
-          // onPress={() => navigation.navigate("Dashboard")}
-          onPress={() => signOut()}
+          onPress={() => navigation.navigate("Tabs")}
         >
           <Text fontSize={16} color={"#fff"} style={styles.mediumText}>
             CONTINUE TO HOME
