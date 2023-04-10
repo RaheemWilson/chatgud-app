@@ -19,19 +19,20 @@ const Microphone = (props: Props) => {
 
   async function startRecording() {
     try {
+      //TODO: modal to tell user to allow audio in phone
       await requestPermission();
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
       });
 
-      const { recording, status } = await Audio.Recording.createAsync(
+      const { recording: newRecording, status } = await Audio.Recording.createAsync(
         Audio.RecordingOptionsPresets.HIGH_QUALITY
       );
       props.onStart && props.onStart()
       animation.current?.play();
       setIsRecording(true);
-      setRecording(recording);
+      setRecording(newRecording);
     } catch (err) {
       console.error("Failed to start recording", err);
     }

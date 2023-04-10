@@ -23,9 +23,11 @@ export default function BirdChat() {
           <Box right={"-180px"}>
             <ChatSvg
               color={"#fff"}
-              width={350}
-              height={200}
-              transform={{ scale: "1.15, 1.15" }}
+              transform={[
+                { scale: "1.3" },
+                { translateX: "30" },
+                { translateY: "10" },
+              ]}
             />
             <Text
               fontSize={"19px"}
@@ -65,7 +67,11 @@ export default function BirdChat() {
             {sound && (
               <>
                 <Box alignSelf={"flex-end"}>
-                  <AudioPlayback uri={sound} color="brand.green" darkColor={"#0000"} />
+                  <AudioPlayback
+                    uri={sound}
+                    color="brand.green"
+                    darkColor={"#0000"}
+                  />
                 </Box>
                 <Box
                   w={"285px"}

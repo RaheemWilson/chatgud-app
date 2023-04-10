@@ -10,6 +10,7 @@ type Props = {
   color: string;
   darkColor: string;
   uri: string;
+  width?: string;
 };
 
 const AudioPlayback = (props: Props) => {
@@ -69,7 +70,7 @@ const AudioPlayback = (props: Props) => {
 
   return (
     <HStack
-      w={"285px"}
+      w={props.width ?? "285px"}
       h={"60px"}
       borderRadius={"10px"}
       bgColor={props.color}
@@ -107,6 +108,7 @@ const AudioPlayback = (props: Props) => {
           ref={animation}
           loop
           style={{
+            width: "auto",
             height: 160,
             backgroundColor: "transparent",
           }}

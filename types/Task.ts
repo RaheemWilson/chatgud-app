@@ -3,7 +3,8 @@ export interface Task {
   problem: string;
   category: any;
   proficiency: any;
-  answer: string;
+  answer: Choice;
+  answerId: string;
   categoryId: string;
   proficiencyId: string;
   options: string;
