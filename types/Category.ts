@@ -6,7 +6,8 @@ export type Category = {
   description: string;
   image: string;
   categoryOrder: number;
-  totalActivites: number;
+  beginnerCount: number;
+  intermediateCount: number;
 };
 
 

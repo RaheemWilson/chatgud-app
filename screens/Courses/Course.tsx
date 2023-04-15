@@ -25,6 +25,7 @@ import AudioComponent from "../../components/course/AudioComponent";
 import { getEvaluation, updateCategoryActCompleted } from "../../api/Activity";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
+import AudioOptionComponent from "../../components/course/AudioOptionComponent";
 
 const CourseScreen = ({
   route,
@@ -58,14 +59,18 @@ const CourseScreen = ({
 
   const { mutate: evaluationMutate } = useMutation(getEvaluation, {
     onSuccess: (data) => {
-      categoryMutate({
-        completed: step,
-        proficiencyId: userData?.user.proficiencyId as string,
-        categoryId: categoryId,
-      });
+      handleCategoryUpdate();
     },
     onError: () => {},
   });
+
+  const handleCategoryUpdate = () => {
+    categoryMutate({
+      completed: step,
+      proficiencyId: userData?.user.proficiencyId as string,
+      categoryId: categoryId,
+    });
+  };
 
   function cycleAnimation() {
     Animated.sequence([
@@ -86,10 +91,10 @@ const CourseScreen = ({
 
   useEffect(() => {
     showNextButton && cycleAnimation();
-  }, []);
+  }, [showNextButton]);
 
   useEffect(() => {
-    setShowNextButton(false)
+    setShowNextButton(false);
   }, [step]);
 
   const renderTask = (task: Task) => {
@@ -103,9 +108,14 @@ const CourseScreen = ({
         />
       );
     }
-
     if (task.type === "AUDIO_OPTIONS") {
-      return <></>;
+      return (
+        <AudioOptionComponent
+          task={task}
+          isOpen={step === task.taskOrder}
+          updateCategory={handleCategoryUpdate}
+        />
+      );
     }
 
     return <></>;
@@ -139,7 +149,13 @@ const CourseScreen = ({
                 borderRadius={"30px"}
                 backgroundColor={"brand.orange"}
                 fontSize={"16px"}
-                onPress={() => setStep(step + 1)}
+                onPress={() => {
+                  if (step === categoryTasks?.length) {
+                    navigation.navigate("LevelCompleted");
+                  } else {
+                    setStep(step + 1);
+                  }
+                }}
                 rightIcon={
                   <Animated.View
                     style={{

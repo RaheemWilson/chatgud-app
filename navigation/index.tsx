@@ -30,11 +30,12 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import { Pressable } from "native-base";
 import ViewCourses from "../screens/Courses/ViewCourses";
-import TabOneScreen from "../screens/TabOneScreen";
+import DashboardScreen from "../screens/DashboardScreen";
 import EditProfileScreen from "../screens/EditProfileSreen";
 import BirdChat from "../screens/BirdChat";
 import ProfileScreen from "../screens/ProfileScreen";
 import CourseScreen from "../screens/Courses/Course";
+import LevelCompletedScreen from "../screens/Courses/LevelCompletedScreen";
 
 export default function Navigation({
   colorScheme,
@@ -132,6 +133,11 @@ const CourseStack = () => {
         component={CourseScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="LevelCompleted"
+        component={LevelCompletedScreen}
+        options={{ headerShown: false }}
+      />
       {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
     </Stack.Navigator>
   );
@@ -160,7 +166,7 @@ function BottomTabNavigator() {
     >
       <BottomTab.Screen
         name="Dashboard"
-        component={TabOneScreen}
+        component={DashboardScreen}
         options={({ navigation }) => ({
           title: "Home",
           tabBarIcon: ({ color, focused }) => {

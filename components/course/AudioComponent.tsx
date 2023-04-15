@@ -237,29 +237,27 @@ const AudioComponent = (props: Props) => {
             py={4}
             px={6}
           >
-            {task.answer.longDescription && (
-              <Box>
-                <HStack alignItems={"center"} space={2}>
-                  <Ionicons name={"book-outline"} size={24} color={"#FED24F"} />
-                  <Text
-                    fontSize={"18px"}
-                    fontFamily={"Rubik-Medium"}
-                    lineHeight={"34px"}
-                    color="brand.yellow"
-                  >
-                    DEFINITION
-                  </Text>
-                </HStack>
+            <Box>
+              <HStack alignItems={"center"} space={2}>
+                <Ionicons name={"book-outline"} size={24} color={"#FED24F"} />
                 <Text
-                  fontSize={"16px"}
+                  fontSize={"18px"}
                   fontFamily={"Rubik-Medium"}
-                  lineHeight={"19px"}
-                  color="#fff"
+                  lineHeight={"34px"}
+                  color="brand.yellow"
                 >
-                  {task.answer.longDescription}
+                  DEFINITION
                 </Text>
-              </Box>
-            )}
+              </HStack>
+              <Text
+                fontSize={"16px"}
+                fontFamily={"Rubik-Medium"}
+                lineHeight={"19px"}
+                color="#fff"
+              >
+                {task.answer.longDescription || task.answer.shortDescription}
+              </Text>
+            </Box>
             {task.answer.sampleSentence && (
               <Box my={2}>
                 <Text

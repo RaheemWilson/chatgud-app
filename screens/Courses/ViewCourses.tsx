@@ -24,20 +24,23 @@ import Carousel from "react-native-reanimated-carousel";
 import { useState } from "react";
 import { categoryImages } from "../../constants/CategoryImages";
 import { RootStackScreenProps, RootTabScreenProps } from "../../types";
+import { useAuth } from "../../context/Auth";
 
 export default function ViewCourses({
   navigation,
 }: RootStackScreenProps<"ViewCourses">) {
+  const { userData } = useAuth();
   const { data: userCategories, refetch: fetchUserCategories } = useQuery(
     ["user-categories"],
     getUserCategories
   );
 
+
   const [activeSlide, setActiveSlide] = useState(0);
   useRefreshOnFocus(fetchUserCategories);
 
   const width = Dimensions.get("window").width;
-  const bg = require("../../assets/images/white-bg.png");
+  // const bg = require("../../assets/images/white-bg.png");
 
   const Item = ({
     category,
@@ -46,6 +49,10 @@ export default function ViewCourses({
     category: CompletedCategory;
     image: ImageSourcePropType;
   }) => {
+    const totalActivites =
+      userData?.user.proficiency.name === "Beginner"
+        ? (category.category.beginnerCount ?? 8)
+        : (category.category.intermediateCount ?? 8);
     return (
       <Box
         background={"transparent"}
@@ -70,7 +77,7 @@ export default function ViewCourses({
           <Heading fontFamily={"Rubik-Medium"} fontSize={"24px"} color={"#fff"}>
             {`Course: ${category.category.name}`}
           </Heading>
-          <Box w="100%" mb={6}>
+          <Box w="100%" mb={2}>
             <Text
               fontFamily={"Rubik-Medium"}
               textAlign={"center"}
@@ -81,11 +88,11 @@ export default function ViewCourses({
               <Text fontSize={"20px"} color={"#fff"}>
                 {category.completed}
               </Text>
-              {`/${category.category.totalActivites}`} UNITS
+              {`/${totalActivites}`} UNITS
             </Text>
             <Progress
               value={
-                (category.completed / category.category.totalActivites) * 100
+                (category.completed / totalActivites) * 100
               }
               mx="4"
               height={"15px"}
@@ -94,8 +101,8 @@ export default function ViewCourses({
               }}
             />
           </Box>
-          <Text textAlign={"center"} color={"#fff"} style={styles.title}>
-            {category.category.description} blah blah blah blah blah blah blah
+          <Text textAlign={"center"} color={"#fff"} fontFamily={"mono"} style={styles.title}>
+            {category.category.description}
           </Text>
           <Button
             marginTop={"auto"}
@@ -110,13 +117,13 @@ export default function ViewCourses({
             background={"brand.yellow"}
             onPress={() =>
               navigation.navigate("Course", {
-                completed: category.completed,
+                completed: category.completed === totalActivites ? 0 : category.completed,
                 categoryId: category.categoryId,
               } as any)
             }
           >
             <Text fontSize={20} color={"#fff"}>
-              {category.completed > 0 ? "Continue learning" : "Start learning"}
+              {category.completed === totalActivites ? "Retake course" : category.completed > 0 ? "Continue learning" : "Start learning"}
             </Text>
           </Button>
         </VStack>
@@ -130,6 +137,7 @@ export default function ViewCourses({
       justifyContent={"space-between"}
       alignItems={"space-between"}
       flex={1}
+      bg={"#fff"}
     >
       <Box flex={0.97}>
         <Carousel
@@ -178,8 +186,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 20,
-    fontWeight: "900",
+    fontSize: 18,
+    fontWeight: "400",
   },
   separator: {
     marginVertical: 30,

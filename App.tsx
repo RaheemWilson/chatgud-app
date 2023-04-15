@@ -35,7 +35,7 @@ export default function App() {
     fonts: {
       heading: "Rubik-Bold",
       body: "Rubik-Medium",
-      mono: "Rubik",
+      mono: "Rubik-Regular",
     },
     fontConfig: {
       Rubik: {
