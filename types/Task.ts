@@ -3,7 +3,7 @@ export interface Task {
   problem: string;
   category: any;
   proficiency: any;
-  answer: Choice;
+  answer: Resource;
   answerId: string;
   categoryId: string;
   proficiencyId: string;
@@ -15,10 +15,10 @@ export interface Task {
 
 export interface TaskChoice {
   id: string;
-  choices: Choice[];
+  choices: Resource[];
 }
 
-export interface Choice {
+export interface Resource {
   id: string;
   name: string;
   type: string;

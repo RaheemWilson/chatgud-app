@@ -1,4 +1,5 @@
 import { Category, CompletedCategory } from "../types/Category";
+import { CompletedQuiz } from "../types/Quiz";
 import { Task } from "../types/Task";
 import axios from "./axios";
 
@@ -22,11 +23,19 @@ export const getUserCategories = async () => {
 
 export const getCategoryTasks = async (categoryId: string) => {
   try {
-    const { data } = await axios.get(`/api/tasks/${categoryId}`);
+    const { data } = await axios.get(`/api/tasks/courses/${categoryId}`);
     return data as Task[];
   } catch (error) {
     throw error;
   }
 }
 
+export const getUserQuizzes = async () => {
+  try {
+    const { data } = await axios.get(`/api/user/quizzes`);
+    return data as CompletedQuiz[];
+  } catch (error) {
+    throw error;
+  }
+};
 

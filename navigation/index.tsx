@@ -36,6 +36,8 @@ import BirdChat from "../screens/BirdChat";
 import ProfileScreen from "../screens/ProfileScreen";
 import CourseScreen from "../screens/Courses/Course";
 import LevelCompletedScreen from "../screens/Courses/LevelCompletedScreen";
+import QuizScreen from "../screens/Quiz/Quiz";
+import ViewQuizzes from "../screens/Quiz/ViewQuizzes";
 
 export default function Navigation({
   colorScheme,
@@ -120,6 +122,38 @@ function AuthNavigator() {
   );
 }
 
+
+
+const DashboardStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Overview"
+        component={DashboardScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Quiz"
+        component={QuizScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ViewQuizzes"
+        component={ViewQuizzes}
+        options={{ headerShown: false }}
+      />
+      {/* 
+      <Stack.Screen
+        name="LevelCompleted"
+        component={LevelCompletedScreen}
+        options={{ headerShown: false }}
+      /> */}
+      {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
+    </Stack.Navigator>
+  );
+};
+
+
 const CourseStack = () => {
   return (
     <Stack.Navigator>
@@ -166,9 +200,10 @@ function BottomTabNavigator() {
     >
       <BottomTab.Screen
         name="Dashboard"
-        component={DashboardScreen}
+        component={DashboardStack}
         options={({ navigation }) => ({
           title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => {
             return (
               <Ionicons

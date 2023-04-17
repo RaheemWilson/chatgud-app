@@ -2,9 +2,9 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { RootStackScreenProps } from "../../types";
 import { Box, Button, VStack, Image, Heading, Text } from "native-base";
 
-export default function LevelCompletedScreen({
+export default function QuizResult({
   navigation,
-}: RootStackScreenProps<"LevelCompleted">) {
+}: RootStackScreenProps<"QuizResult">) {
   const img = require("../../assets/images/mascot.png");
 
   return (

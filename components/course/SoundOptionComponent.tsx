@@ -4,15 +4,17 @@ import { Task } from "../../types/Task";
 import ChatSvg from "../svgs/Chat";
 import { Animated, StyleSheet } from "react-native";
 import AudioOptionPlayback from "../audio/AudioOptionPlayback";
+import AudioPlayback from "../audio/AudioPlayback";
 
 type Props = {
   task: Task;
   isOpen: boolean;
   updateCategory: Function;
-  isQuiz?: boolean;
+  audio: string;
+  isQuiz?: boolean
 };
 
-const AudioOptionComponent = (props: Props) => {
+const SoundOptionComponent = (props: Props) => {
   const mascot = require("../../assets/images/mascot.png");
   const [answer, setAnswer] = useState("");
   const [isCorrect, setIsCorrect] = useState(false);
@@ -45,13 +47,13 @@ const AudioOptionComponent = (props: Props) => {
       style={{
         width: "100%",
         height: "100%",
-        paddingBottom: 40,
+        paddingBottom: 20,
         transform: [{ translateX: slideAnim }],
       }}
     >
       {
         <Box flex={1} justifyContent={"flex-start"} alignItems={"center"}>
-          <HStack mt={8} alignItems={"flex-end"}>
+          <HStack mt={2} mb={6} alignItems={"flex-end"}>
             <Image
               source={mascot}
               alt="ChatGud mascot"
@@ -94,6 +96,12 @@ const AudioOptionComponent = (props: Props) => {
               </Box>
             </Box>
           </HStack>
+          <AudioPlayback
+            uri={props.audio}
+            color="brand.green"
+            darkColor="#000"
+            width="320px"
+          />
           {answer.length > 0 && (
             <Box mt={7}>
               <Text
@@ -117,7 +125,9 @@ const AudioOptionComponent = (props: Props) => {
                 width={"80%"}
               >
                 {isCorrect || props?.isQuiz
-                  ? `Correct answer: ${task.answer.name} \n ${task.answer.transcription}`
+                  ? `Correct answer: ${task.answer.name} \n ${
+                      task.answer.transcription ?? ""
+                    }`
                   : "Try again!"}
               </Text>
             </Box>
@@ -185,7 +195,7 @@ const AudioOptionComponent = (props: Props) => {
   );
 };
 
-export default AudioOptionComponent;
+export default SoundOptionComponent;
 
 const styles = StyleSheet.create({
   center: {
