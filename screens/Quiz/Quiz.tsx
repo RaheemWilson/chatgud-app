@@ -22,7 +22,11 @@ import {
 } from "react-native";
 import { Task } from "../../types/Task";
 import AudioComponent from "../../components/course/AudioComponent";
-import { getEvaluation, updateCategoryActCompleted } from "../../api/Activity";
+import {
+  getEvaluation,
+  updateCategoryActCompleted,
+  updateQuizCompleted,
+} from "../../api/Activity";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 import AudioOptionComponent from "../../components/course/AudioOptionComponent";
@@ -35,7 +39,6 @@ const QuizScreen = ({ route, navigation }: RootStackScreenProps<"Quiz">) => {
   const [step, setStep] = useState(1);
   const [questionsCorrect, setQuestionsCorrect] = useState(0);
   const { quizId } = route.params as any;
-  const { userData } = useAuth();
 
   const [timerCount, setTimer] = useState(120);
 
@@ -52,9 +55,17 @@ const QuizScreen = ({ route, navigation }: RootStackScreenProps<"Quiz">) => {
     handleTimer();
   }, 1000);
   useEffect(() => {
-    timerCount === 0 && clearInterval(interval);
+    timerCount === 0 && handleTimeout();
     return () => clearInterval(interval);
   }, [timerCount]);
+
+  const handleTimeout = () => {
+    clearInterval(interval);
+    quizMutate({
+      quizId,
+      questionsCorrect,
+    });
+  };
 
   const { data: quizTasks, refetch: fetchQuizTask } = useQuery(
     ["quiz-task"],
@@ -66,11 +77,11 @@ const QuizScreen = ({ route, navigation }: RootStackScreenProps<"Quiz">) => {
 
   const {
     data,
-    mutate: categoryMutate,
+    mutate: quizMutate,
     isLoading,
-  } = useMutation(updateCategoryActCompleted, {
+  } = useMutation(updateQuizCompleted, {
     onSuccess: () => {
-      // setShowNextButton(true);
+      navigation.navigate("QuizResult");
     },
     onError: () => {},
   });
@@ -87,19 +98,15 @@ const QuizScreen = ({ route, navigation }: RootStackScreenProps<"Quiz">) => {
       setQuestionsCorrect(questionsCorrect + 1);
     }
     if (step < quizTasks?.quizQuestion?.length!) {
-      console.log("heyyyyyy");
       setTimeout(() => {
         setStep(step + 1);
       }, 500);
     } else {
-      console.log("Answers", questionsCorrect);
-      console.log("PUSH TO SUCCESS PAGE");
+      quizMutate({
+        quizId,
+        questionsCorrect,
+      });
     }
-    // categoryMutate({
-    //   completed: step,
-    //   proficiencyId: userData?.user.proficiencyId as string,
-    //   // categoryId: categoryId,
-    // });
   };
 
   const renderTask = (question: QuizQuestion) => {
@@ -173,7 +180,8 @@ const QuizScreen = ({ route, navigation }: RootStackScreenProps<"Quiz">) => {
               width={"200px"}
               textAlign={"right"}
             >
-              0{Math.floor(timerCount / 60)}:{`${timerCount % 60 }`.padStart(2, "0")}
+              0{Math.floor(timerCount / 60)}:
+              {`${timerCount % 60}`.padStart(2, "0")}
             </Text>
           </Box>
         </HStack>

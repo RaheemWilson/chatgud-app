@@ -47,13 +47,7 @@ export default function ViewQuizzes({
     getUserQuizzes
   );
 
-  console.log(userQuizzes);
-
-  const [activeSlide, setActiveSlide] = useState(0);
   useRefreshOnFocus(fetchQuizzes);
-
-  const width = Dimensions.get("window").width;
-  // const bg = require("../../assets/images/white-bg.png");
 
   const Item = ({
     quiz,

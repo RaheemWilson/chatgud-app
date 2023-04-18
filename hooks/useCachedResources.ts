@@ -37,6 +37,7 @@ export default function useCachedResources() {
           'Rubik-Medium': require("../assets/fonts/Rubik-Medium.ttf"),
           'Rubik-Black': require("../assets/fonts/Rubik-Black.ttf"),
           'Rubik-Light': require("../assets/fonts/Rubik-Light.ttf"),
+          'Growth-Period': require("../assets/fonts/Growth-period.otf"),
         });
         const images = cacheImages([
           require("../assets/images/mascot.png"),

@@ -47,3 +47,15 @@ export const updateCategoryActCompleted = async (levelInfo: {
     throw error;
   }
 };
+
+export const updateQuizCompleted = async (levelInfo: {
+  quizId: string;
+  questionsCorrect: number;
+}) => {
+  try {
+    const { data } = await axios.put(`/api/activities/quiz`, levelInfo);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

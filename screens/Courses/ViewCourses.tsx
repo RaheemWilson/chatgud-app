@@ -137,7 +137,7 @@ export default function ViewCourses({
       justifyContent={"space-between"}
       alignItems={"space-between"}
       flex={1}
-      bg={"#fff"}
+      bg={"brand.mint"}
     >
       <Box flex={0.97}>
         <Carousel

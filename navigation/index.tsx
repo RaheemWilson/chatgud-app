@@ -38,6 +38,7 @@ import CourseScreen from "../screens/Courses/Course";
 import LevelCompletedScreen from "../screens/Courses/LevelCompletedScreen";
 import QuizScreen from "../screens/Quiz/Quiz";
 import ViewQuizzes from "../screens/Quiz/ViewQuizzes";
+import QuizResult from "../screens/Quiz/QuizResult";
 
 export default function Navigation({
   colorScheme,
@@ -140,6 +141,11 @@ const DashboardStack = () => {
       <Stack.Screen
         name="ViewQuizzes"
         component={ViewQuizzes}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="QuizResult"
+        component={QuizResult}
         options={{ headerShown: false }}
       />
       {/* 

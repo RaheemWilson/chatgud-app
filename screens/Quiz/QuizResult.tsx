@@ -24,7 +24,7 @@ export default function QuizResult({
             style={{ transform: [{ rotate: "350deg" }] }}
           />
           <Heading color={"#525367"} fontSize={"36px"}>
-            Hooray! 🥳
+            Big up yuhself! 🥳
           </Heading>
           <Text
             fontSize={"16px"}
@@ -33,7 +33,7 @@ export default function QuizResult({
             color={"brand.grey"}
             style={styles.mediumText}
           >
-            Your have completed this course successfully!
+            You did well on your quiz!
           </Text>
         </VStack>
         <VStack space={3}>
@@ -45,7 +45,7 @@ export default function QuizResult({
             mt={2}
             w="full"
             background={"brand.yellow"}
-            onPress={() => navigation.navigate("Courses")}
+            onPress={() => navigation.navigate("Overview")}
           >
             <Text fontSize={16} color={"brand.gray"} style={styles.mediumText}>
               Continue learning
@@ -57,10 +57,10 @@ export default function QuizResult({
             backgroundColor={"brand.mint"}
             height={"50px"}
             color={"brand.green"}
-            onPress={() => navigation.navigate("Dashboard")}
+            onPress={() => navigation.navigate("ViewQuizzes")}
           >
             <Text fontSize={16} color={"brand.green"} style={styles.mediumText}>
-              Take one of our quizzes!
+              Take another quiz
             </Text>
           </Button>
         </VStack>
