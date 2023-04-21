@@ -32,13 +32,14 @@ import { Pressable } from "native-base";
 import ViewCourses from "../screens/Courses/ViewCourses";
 import DashboardScreen from "../screens/DashboardScreen";
 import EditProfileScreen from "../screens/EditProfileSreen";
-import BirdChat from "../screens/BirdChat";
 import ProfileScreen from "../screens/ProfileScreen";
 import CourseScreen from "../screens/Courses/Course";
 import LevelCompletedScreen from "../screens/Courses/LevelCompletedScreen";
 import QuizScreen from "../screens/Quiz/Quiz";
 import ViewQuizzes from "../screens/Quiz/ViewQuizzes";
 import QuizResult from "../screens/Quiz/QuizResult";
+import DailyChallengeScreen from "../screens/DailyChallengeScreen";
+import Leaderboard from "../screens/Leaderboard";
 
 export default function Navigation({
   colorScheme,
@@ -123,8 +124,6 @@ function AuthNavigator() {
   );
 }
 
-
-
 const DashboardStack = () => {
   return (
     <Stack.Navigator>
@@ -148,17 +147,15 @@ const DashboardStack = () => {
         component={QuizResult}
         options={{ headerShown: false }}
       />
-      {/* 
       <Stack.Screen
-        name="LevelCompleted"
-        component={LevelCompletedScreen}
+        name="DailyChallenge"
+        component={DailyChallengeScreen}
         options={{ headerShown: false }}
-      /> */}
+      />
       {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
     </Stack.Navigator>
   );
 };
-
 
 const CourseStack = () => {
   return (
@@ -210,6 +207,7 @@ function BottomTabNavigator() {
         options={({ navigation }) => ({
           title: "Home",
           headerShown: false,
+          unmountOnBlur: true,
           tabBarIcon: ({ color, focused }) => {
             return (
               <Ionicons
@@ -237,6 +235,22 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
+        name="Leaderboard"
+        component={Leaderboard}
+        options={{
+          title: "Leaderboard",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? "flame" : "flame-outline"}
+              size={24}
+              color={color}
+            />
+          ),
+          headerShown: false,
+          unmountOnBlur: true,
+        }}
+      />
+      {/* <BottomTab.Screen
         name="BirdChat"
         component={BirdChat}
         options={{
@@ -251,7 +265,7 @@ function BottomTabNavigator() {
           headerShown: false,
           unmountOnBlur: true,
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Profile"
         component={ProfileScreen}

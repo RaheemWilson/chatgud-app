@@ -28,6 +28,7 @@ export type RootTabParamList = {
   Dashboard: undefined;
   Courses: undefined;
   BirdChat: undefined;
+  Leaderboard: undefined;
   Profile: undefined;
 };
 

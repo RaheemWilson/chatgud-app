@@ -16,18 +16,29 @@ import { useAuth } from "../context/Auth";
 import { Ionicons } from "@expo/vector-icons";
 import Patty from "../components/svgs/Patty";
 import Coins from "../components/svgs/Coins";
+import { useQuery } from "@tanstack/react-query";
+import { getUserData } from "../api/Category";
+import { useRefreshOnFocus } from "../hooks/useRefreshOnFocus";
 
-export default function TabOneScreen({
+export default function DashboardScreen({
   navigation,
 }: RootStackScreenProps<"Overview">) {
   const bg = require("../assets/images/white-bg.png");
   const mascot = require("../assets/images/mascot.png");
   const { userData } = useAuth();
+
+  const { data: userOverview, refetch: fetchUserOverview } = useQuery(
+    ["user-data"],
+    getUserData
+  );
+
+  useRefreshOnFocus(fetchUserOverview);
+
   return (
     <ImageBackground source={bg} style={styles.image}>
       <Box pt={`${Constants.statusBarHeight + 30}px`} flex={1}>
         <HStack p={4} flex={1}>
-          <Box>
+          <Box flex={1}>
             <Text fontSize={"30px"} color={"brand.green"} lineHeight={"38px"}>
               {`Waa gwaan, \n${userData?.user.username}`}!
             </Text>
@@ -35,7 +46,14 @@ export default function TabOneScreen({
               mt={3}
               fontSize={"17px"}
               fontFamily={"mono"}
+              color={"brand.black"}
             >{`Get ready to 'irie' up your \nlanguage skills!`}</Text>
+            <HStack alignItems={"center"}>
+              <Coins />
+              <Text color={"brand.black"} fontFamily={"body"} fontSize={"34px"}>
+                {userOverview?.score ?? 0}
+              </Text>
+            </HStack>
           </Box>
           <Image
             source={mascot}
@@ -52,15 +70,12 @@ export default function TabOneScreen({
         </HStack>
         <VStack
           space={6}
-          // height={"73%"}
           width={"93%"}
           borderTopRadius={"10px"}
           borderTopColor={"gray.300"}
           pb={4}
           mx={"auto"}
         >
-          <Coins />
-          <Patty />
           <Stack
             direction={"row"}
             justifyContent={"space-evenly"}
@@ -79,33 +94,31 @@ export default function TabOneScreen({
           >
             <VStack alignItems={"center"}>
               <Text color={"brand.green"} fontFamily={"body"} fontSize={"28px"}>
-                0
+                {userOverview?.completedCategories ?? 0}
               </Text>
               <Text color={"#0C092A"} fontFamily={"mono"} fontSize={14}>
-                Courses
+                {`Course${userOverview?.completedCategories! > 1 ? "s" : ""}`}
               </Text>
             </VStack>
             <VStack alignItems={"center"}>
               <Text color={"brand.green"} fontFamily={"body"} fontSize={"28px"}>
-                0
+                {userOverview?.completedChallenges ?? 0}
               </Text>
               <Text color={"#0C092A"} fontFamily={"mono"} fontSize={14}>
-                Challenges
+                {`Challenge${userOverview?.completedQuiz! > 1 ? "s" : ""}`}
               </Text>
             </VStack>
             <VStack alignItems={"center"}>
               <Text color={"brand.green"} fontFamily={"body"} fontSize={"28px"}>
-                0
+                {userOverview?.completedQuiz ?? 0}
               </Text>
               <Text color={"#0C092A"} fontFamily={"mono"} fontSize={14}>
-                Quizzes
+                {`Quiz${userOverview?.completedQuiz! > 1 ? "zes" : ""}`}
               </Text>
             </VStack>
           </Stack>
           <VStack mt="auto" space={4}>
-            <Pressable
-              onPress={() => navigation.navigate("ViewQuizzes")}
-            >
+            <Pressable onPress={() => navigation.navigate("DailyChallenge")}>
               <Box
                 borderRadius={"12px"}
                 bg={"brand.green"}
@@ -116,7 +129,12 @@ export default function TabOneScreen({
                   <Text fontFamily={"body"} color="#fff" fontSize={"24px"}>
                     Word of the day!
                   </Text>
-                  <Text fontFamily={"mono"} fontSize={17} lineHeight={"24px"} color={"#fff"}>
+                  <Text
+                    fontFamily={"mono"}
+                    fontSize={17}
+                    lineHeight={"24px"}
+                    color={"#fff"}
+                  >
                     {`Spice up your language skills with a daily \ndose of Jamaican patois!`}
                   </Text>
                 </Box>
@@ -138,9 +156,7 @@ export default function TabOneScreen({
                 </HStack>
               </Box>
             </Pressable>
-            <Pressable
-              onPress={() => navigation.navigate("ViewQuizzes")}
-            >
+            <Pressable onPress={() => navigation.navigate("ViewQuizzes")}>
               <Box
                 borderRadius={"12px"}
                 bg={"brand.orange"}
@@ -151,7 +167,12 @@ export default function TabOneScreen({
                   <Text fontFamily={"body"} color="#fff" fontSize={"24px"}>
                     Patois Quiz Time!
                   </Text>
-                  <Text fontFamily={"mono"} fontSize={16} lineHeight={"24px"} color={"#fff"}>
+                  <Text
+                    fontFamily={"mono"}
+                    fontSize={16}
+                    lineHeight={"24px"}
+                    color={"#fff"}
+                  >
                     {`Test your patois knowledge with our fun \nquizzes - Challenge accepted?`}
                   </Text>
                 </Box>

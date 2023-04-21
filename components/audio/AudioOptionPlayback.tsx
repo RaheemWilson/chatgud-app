@@ -1,10 +1,7 @@
 import React, { useRef, useState } from "react";
 import { type AVPlaybackStatus, Audio } from "expo-av";
-import { Box, HStack, IconButton, Text } from "native-base";
-import LottieView from "lottie-react-native";
-import { Pressable } from "react-native";
+import { IconButton } from "native-base";
 import type AnimatedLottieView from "lottie-react-native";
-import { FontAwesome5, Foundation } from "@expo/vector-icons";
 import Speaker from "../svgs/Speaker";
 
 type Props = {
@@ -72,7 +69,7 @@ const AudioOptionPlayback = (props: Props) => {
         !isPlaying && (await playSound());
       }}
       _pressed={{
-        backgroundColor: "brand.200"
+        backgroundColor: "brand.200",
       }}
       borderColor={"gray.200"}
       variant={"outline"}

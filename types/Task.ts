@@ -28,3 +28,19 @@ export interface Resource {
   media: string;
   sampleSentence?: string;
 }
+
+export type DailyChallenge = {
+  id: string;
+  problem: Task;
+  dayOrder: number;
+};
+
+export type UserOverview = {
+  score: number;
+  completedQuiz: number;
+  completedChallenges: number;
+  completedCategories: number;
+  quizScore: number;
+  challengeScore: number;
+  categoryScore: number;
+};

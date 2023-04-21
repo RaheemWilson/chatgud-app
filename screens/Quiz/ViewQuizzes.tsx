@@ -36,7 +36,7 @@ import { RootStackScreenProps, RootTabScreenProps } from "../../types";
 import { useAuth } from "../../context/Auth";
 import { CompletedQuiz } from "../../types/Quiz";
 import Constants from "expo-constants";
-import { Ionicons } from "@expo/vector-icons";
+import { EvilIcons, Ionicons } from "@expo/vector-icons";
 
 export default function ViewQuizzes({
   navigation,
@@ -62,7 +62,7 @@ export default function ViewQuizzes({
   }) => {
     return (
       <Pressable
-        shadow="1"
+        // shadow="1" 
         onPress={() => {
           navigation.navigate("Quiz", {
             quizId: quiz.quiz.id,
@@ -71,7 +71,7 @@ export default function ViewQuizzes({
       >
         {({ isPressed }) => {
           return (
-            <HStack
+            <Box
               style={{
                 transform: [
                   {
@@ -81,30 +81,44 @@ export default function ViewQuizzes({
               }}
               background={color}
               borderRadius={"10px"}
-              alignItems={"center"}
-              space={4}
-              p={4}
-              width={"full"}
             >
-              <Circle
-                bg={"#fff"}
-                p={2}
-                borderColor={"brand.orange"}
-                borderWidth={4}
-                size={"70"}
+              <HStack alignItems={"center"} space={4} p={4} width={"full"}>
+                <Circle
+                  bg={"#fff"}
+                  p={2}
+                  borderColor={"brand.orange"}
+                  borderWidth={4}
+                  size={"70"}
+                >
+                  <Image source={image} alt={"Category image"} size="40px" />
+                </Circle>
+                <VStack w="70%" space={2}>
+                  <Text color={"#fff"} fontSize={"18"}>
+                    {quiz.quiz.category.name} Quiz {emoji}
+                  </Text>
+                  <Text color={"#fff"} fontSize={"16"} fontFamily={"mono"}>
+                    Test you knowledge on what you have learnt for{" "}
+                    {quiz.quiz.category.name.toLowerCase()}.
+                  </Text>
+                </VStack>
+              </HStack>
+              <HStack
+                mt={"auto"}
+                borderBottomRadius={"12px"}
+                height={"45px"}
+                w="full"
+                bg={"rgba(0, 0, 0, 0.05)"}
+                py={2}
+                px={6}
+                justifyContent={"space-between"}
+                alignItems={"center"}
               >
-                <Image source={image} alt={"Category image"} size="40px" />
-              </Circle>
-              <VStack w="70%" space={2}>
-                <Text color={"#fff"} fontSize={"18"}>
-                  {quiz.quiz.category.name} Quiz {emoji}
+                <Text fontFamily={"body"} fontSize={16} color={"#fff"}>
+                  {quiz.score > 0 ? "Retake quiz" : "Take quiz"}
                 </Text>
-                <Text color={"#fff"} fontSize={"16"} fontFamily={"mono"}>
-                  Test you knowledge on what you have learnt for{" "}
-                  {quiz.quiz.category.name.toLowerCase()}.
-                </Text>
-              </VStack>
-            </HStack>
+                <Ionicons name="arrow-forward" size={24} color="#fff" />
+              </HStack>
+            </Box>
           );
         }}
       </Pressable>
@@ -122,7 +136,7 @@ export default function ViewQuizzes({
       p={4}
     >
       <HStack
-        p={4}
+        py={4}
         w="full"
         justifyContent={"space-between"}
         alignItems={"center"}
@@ -130,24 +144,15 @@ export default function ViewQuizzes({
       >
         <Pressable onPress={() => navigation.goBack()}>
           <HStack alignItems={"center"} space={1} justifyContent={"center"}>
-            <Ionicons name="arrow-back-outline" size={30} color="#000" />
-            {/* <Text
-              fontFamily={"body"}
-              fontSize={"16px"}
-              color={"#000"}
-              textAlign={"center"}
-            >
-              Dashboard
-            </Text> */}
+            <EvilIcons name="close" size={32} color="#00A15C" />
           </HStack>
         </Pressable>
-        <Box>
+        <Box w="80%">
           <Text
-            fontFamily={"heading"}
-            fontSize="20px"
-            color={"#000"}
-            // width={"100px"}
-            textAlign={"right"}
+            fontFamily={"body"}
+            fontSize="24px"
+            color={"#00A15C"}
+            textAlign={"center"}
           >
             Our Quizzes
           </Text>
@@ -157,7 +162,7 @@ export default function ViewQuizzes({
       <VStack w={"full"} space={4}>
         {userQuizzes?.map((item, index) => {
           const colors = ["brand.yellow", "#56A4CC", "brand.green"];
-          const emojis = ["🔮", "✨", "💫", "⚡️"];
+          const emojis = ["📚", "✨", "💫", "⚡️"];
           return (
             <Item
               quiz={item}
