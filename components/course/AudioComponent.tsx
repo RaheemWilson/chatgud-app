@@ -6,7 +6,7 @@ import AudioPlayback from "../audio/AudioPlayback";
 import { Animated, StyleSheet } from "react-native";
 import Microphone from "../audio/Microphone";
 import { useAuth } from "../../context/Auth";
-import { Ionicons } from "@expo/vector-icons";
+import { Fontisto, Ionicons } from "@expo/vector-icons";
 
 type Props = {
   task: Task;
@@ -35,6 +35,29 @@ const AudioComponent = (props: Props) => {
     setSound(soundUri);
     props.mutate({ audio: soundUri });
   };
+
+  const renderResult = () => {
+    const answer = 1;
+
+    if(answer == 1){
+      return {
+        "heading": "Well done",
+        "subheading": "Yu a gwaan gud!",
+        "color": "#FFD152",
+        "count": 3
+      }
+    }
+
+    if(answer == 2){
+      return {
+        "heading": "Well done",
+        "subheading": "Yu a gwaan gud!",
+        "color": "#FFD152",
+        "count": 3
+      }
+    }
+    
+  }
 
   return (
     <Animated.View
@@ -260,14 +283,17 @@ const AudioComponent = (props: Props) => {
             </Box>
             {task.answer.sampleSentence && (
               <Box my={2}>
-                <Text
-                  fontSize={"18px"}
-                  fontFamily={"Rubik-Medium"}
-                  lineHeight={"34px"}
-                  color="brand.yellow"
-                >
-                  SAMPLE SENTENCE
-                </Text>
+                <HStack space={2} alignItems={"center"}>
+                  <Fontisto name="paragraph" size={20} color={"#FED24F"} />
+                  <Text
+                    fontSize={"18px"}
+                    fontFamily={"Rubik-Medium"}
+                    lineHeight={"34px"}
+                    color="brand.yellow"
+                  >
+                    SAMPLE SENTENCE
+                  </Text>
+                </HStack>
                 <Text
                   fontSize={"16px"}
                   fontFamily={"Rubik-Medium"}

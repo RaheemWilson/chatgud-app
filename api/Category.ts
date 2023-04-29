@@ -1,3 +1,4 @@
+import { Users } from "../types/Auth";
 import { Category, CompletedCategory } from "../types/Category";
 import { CompletedQuiz } from "../types/Quiz";
 import { Task, UserOverview } from "../types/Task";
@@ -28,7 +29,7 @@ export const getCategoryTasks = async (categoryId: string) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 export const getUserQuizzes = async () => {
   try {
@@ -48,3 +49,11 @@ export const getUserData = async () => {
   }
 };
 
+export const getUsers = async () => {
+  try {
+    const { data } = await axios.get(`/api/users/leaderboard`);
+    return data as Users[];
+  } catch (error) {
+    throw error;
+  }
+};

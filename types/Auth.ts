@@ -37,4 +37,8 @@ export interface UpdateUser {
   nationality: string;
 }
 
-
+export type Users = {
+  username: string;
+  score: number;
+  id: string;
+};

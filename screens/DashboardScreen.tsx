@@ -46,11 +46,11 @@ export default function DashboardScreen({
               mt={3}
               fontSize={"17px"}
               fontFamily={"mono"}
-              color={"brand.black"}
+              color={"brand.gray"}
             >{`Get ready to 'irie' up your \nlanguage skills!`}</Text>
             <HStack alignItems={"center"}>
               <Coins />
-              <Text color={"brand.black"} fontFamily={"body"} fontSize={"34px"}>
+              <Text color={"brand.gray"} fontFamily={"body"} fontSize={"34px"}>
                 {userOverview?.score ?? 0}
               </Text>
             </HStack>

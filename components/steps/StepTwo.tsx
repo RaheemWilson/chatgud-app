@@ -75,12 +75,13 @@ const StepTwo = (props: Props) => {
                   <VStack space={4} mt={6}>
                     {data
                       ?.sort((a, b) => a.preferenceOrder - b.preferenceOrder)
-                      .map((level) => {
+                      .map((level, index) => {
                         return (
                           <Pressable
                             borderRadius={"18px"}
                             height={"80px"}
                             mt={2}
+                            key={index}
                             py={2}
                             px={4}
                             fontSize={20}

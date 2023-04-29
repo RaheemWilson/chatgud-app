@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, Button, ImageBackground } from "react-native";
 import { Box, Text, Image, VStack, HStack, IconButton } from "native-base";
 import ChatSvg from "../components/svgs/Chat";
-import { EvilIcons, Ionicons } from "@expo/vector-icons";
+import { EvilIcons, FontAwesome, Fontisto, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { RootStackScreenProps } from "../types";
 import { useQuery } from "@tanstack/react-query";
@@ -27,8 +27,8 @@ export default function DailyChallengeScreen({
     isLoading,
     refetch: fetchQuizTask,
   } = useQuery(["daily-challenges"], () => getDailyChallenges(), {
-    onSuccess: () => {
-      const media = dailyChallenge?.problem.answer.media.split(" ") as string[];
+    onSuccess: (data) => {
+      const media = data?.problem.answer.media.split(" ") as string[];
       setAudio(media[0]);
       setImage(media[1]);
     },
@@ -37,7 +37,6 @@ export default function DailyChallengeScreen({
     },
   });
 
-  //   console.log(dailyChallenge?.problem.answer.media.split(" ")[1]);
   return (
     <ImageBackground source={bg} style={styles.image}>
       <Box
@@ -118,7 +117,14 @@ export default function DailyChallengeScreen({
             p={6}
             space={4}
           >
-            <Text
+            <Image
+              height={"140px"}
+              width={"full"}
+              source={{ uri: image }}
+              alt="Patty with green background"
+              borderRadius={"10px"}
+            />
+            {/* <Text
               fontFamily={"body"}
               fontSize={"16px"}
               color={"#525367"}
@@ -126,24 +132,24 @@ export default function DailyChallengeScreen({
               //   textAlign={"center"}
             >
               {dailyChallenge?.problem.answer.shortDescription}
-            </Text>
-            <Text fontFamily={"body"} fontSize={"16px"} color={"#525367"}>
-              {dailyChallenge?.problem.answer.longDescription}
-            </Text>
-            <Text fontFamily={"body"} fontSize={"16px"} color={"#525367"}>
-              Sample sentence: "{dailyChallenge?.problem.answer.sampleSentence}"
-            </Text>
-            <Text fontFamily={"body"} fontSize={"16px"} color={"#525367"}>
+            </Text> */}
+            <Text fontFamily={"mono"} fontSize={"16px"} color={"#525367"}>
+              {dailyChallenge?.problem.answer.longDescription?.split(".")[0]}.
               Here is how it is pronounced:
             </Text>
-            {audio.length > 0 && <AudioOptionPlayback uri={audio} />}
-            {/* {image.length > 0 && (
-              <Image
-                size={"100px"}
-                source={{ uri: image }}
-                alt="Patty with green background"
-              />
-            )} */}
+            {/* <Text fontFamily={"body"} fontSize={"16px"} color={"#525367"}>
+              Sample sentence: "{dailyChallenge?.problem.answer.sampleSentence}"
+            </Text> */}
+            <Box alignSelf={"center"}>
+              {audio.length > 0 && <AudioOptionPlayback uri={audio} />}
+            </Box>
+            <Text
+              fontFamily={"mono"}
+              fontSize={"16px"}
+              color={"#525367"}
+            >
+              Now, try to pronounce the word of the day:
+            </Text>
             <Microphone
               setSound={(value: any) => {
                 setSound(value);
@@ -158,11 +164,10 @@ export default function DailyChallengeScreen({
         {sound && (
           <Box
             flex={1}
-            justifyContent={"flex-start"}
+            justifyContent={"center"}
             alignItems={"center"}
             position={"relative"}
             pt={8}
-            // px={8}
           >
             <Text
               fontFamily={"body"}
@@ -194,14 +199,14 @@ export default function DailyChallengeScreen({
               <Text
                 fontFamily={"heading"}
                 fontSize={"16px"}
-                color={"brand.yellow"}
+                color={"brand.orange"}
                 width={"175px"}
                 textAlign={"center"}
               >
                 Loading ...
               </Text>
             </Box>
-            <HStack alignItems={"center"}>
+            <HStack alignItems={"center"} mt={"8px"}>
               <Coins />
               <Text
                 color={"brand.orange"}
@@ -211,113 +216,40 @@ export default function DailyChallengeScreen({
                 60
               </Text>
             </HStack>
-            {/* <HStack
-            mt={6}
-            alignItems={"flex-start"}
-            justifyContent={"center"}
-            position={"relative"}
-            space={0}
-            px={4}
-            // borderWidth={1}
-          >
-            <Image
-              source={mascot}
-              alt="ChatGud mascot"
-              height={"280px"}
-              width={"160px"}
-              left={1}
-              style={{ transform: [{ rotate: "340deg" }] }}
-            />
-            <Box bottom={4} right={1}>
-              <Box position={"relative"}>
-                <ChatSvg
-                  color={"#00A15C"}
-                  width="230px"
-                  height="140px"
-                  transform={[
-                    { scale: "1.3" },
-                    { translateX: "30" },
-                    { translateY: "10" },
-                  ]}
-                />
-                <Box
-                  position={"absolute"}
-                  top={0}
-                  bottom={0}
-                  right={0}
-                  left={0}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                >
+            <Box
+              height={"auto"}
+              maxHeight={"260px"}
+              width={"100%"}
+              position={"relative"}
+              overflow={"scroll"}
+              py={4}
+              px={6}
+            >
+              {dailyChallenge?.problem.answer.sampleSentence && (
+                <Box my={2} alignSelf={"center"}>
+                  <HStack alignItems={"center"} justifyContent={"center"} space={2}>
+                    {/* <Fontisto name="paragraph" size={20} color={"#FED24F"} /> */}
+                    <Text
+                      fontFamily={"body"}
+                      fontSize={"16px"}
+                      color={"#525367"}
+                      lineHeight={"34px"}
+                      // color="brand.orange"
+                    >
+                      SAMPLE SENTENCE
+                    </Text>
+                  </HStack>
                   <Text
-                    fontSize={"30px"}
-                    fontFamily={"Rubik-Medium"}
-                    textAlign={"center"}
-                    alignSelf={"center"}
-                    lineHeight={"34px"}
-                    color="#fff"
-                    textTransform={"capitalize"}
+                    fontSize={"16px"}
+                    fontFamily={"heading"}
+                    lineHeight={"19px"}
+                    color="brand.orange"
                   >
-                    Loading...
+                    {dailyChallenge?.problem.answer.sampleSentence}.
                   </Text>
                 </Box>
-              </Box>
+              )}
             </Box>
-          </HStack> */}
-            {/* <Box
-            height={"auto"}
-            maxHeight={"260px"}
-            width={"100%"}
-            borderTopRadius={20}
-            marginTop={"auto"}
-            bg={"brand.green"}
-            position={"relative"}
-            overflow={"scroll"}
-            py={4}
-            px={6}
-          >
-            <Box>
-              <HStack alignItems={"center"} space={2}>
-                <Ionicons name={"book-outline"} size={24} color={"#FED24F"} />
-                <Text
-                  fontSize={"18px"}
-                  fontFamily={"Rubik-Medium"}
-                  lineHeight={"34px"}
-                  color="brand.yellow"
-                >
-                  DEFINITION
-                </Text>
-              </HStack>
-              <Text
-                fontSize={"16px"}
-                fontFamily={"Rubik-Medium"}
-                lineHeight={"19px"}
-                color="#fff"
-              >
-                {dailyChallenge?.problem.answer.longDescription}
-              </Text>
-            </Box>
-            {task.answer.sampleSentence && (
-              <Box my={2}>
-                <Text
-                  fontSize={"18px"}
-                  fontFamily={"Rubik-Medium"}
-                  lineHeight={"34px"}
-                  color="brand.yellow"
-                >
-                  SAMPLE SENTENCE
-                </Text>
-                <Text
-                  fontSize={"16px"}
-                  fontFamily={"Rubik-Medium"}
-                  lineHeight={"19px"}
-                  color="#fff"
-                >
-                  {task.answer.sampleSentence}
-                </Text>
-              </Box>
-            )}
-          </Box> */}
           </Box>
         )}
       </Box>

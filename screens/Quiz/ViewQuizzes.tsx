@@ -62,7 +62,7 @@ export default function ViewQuizzes({
   }) => {
     return (
       <Pressable
-        // shadow="1" 
+        // shadow="1"
         onPress={() => {
           navigation.navigate("Quiz", {
             quizId: quiz.quiz.id,
@@ -165,6 +165,7 @@ export default function ViewQuizzes({
           const emojis = ["📚", "✨", "💫", "⚡️"];
           return (
             <Item
+              key={index}
               quiz={item}
               color={colors[index % 3]}
               emoji={emojis[index % 4]}
