@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "chatgud-app",
+    "name": "ChatGud",
     "slug": "chatgud-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -20,14 +20,20 @@
       "assets/images/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wilsonzackery16.chatgudapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["RECORD_AUDIO"]
+      "permissions": [
+        "RECORD_AUDIO",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "package": "com.wilsonzackery16.chatgudapp"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -39,6 +45,11 @@
           "microphonePermission": "Allow ChatGud.app to access your microphone."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "62bd8623-db36-4193-80a9-7e73ce12224d"
+      }
+    }
   }
 }

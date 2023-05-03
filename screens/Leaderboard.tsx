@@ -33,7 +33,7 @@ export default function Leaderboard() {
       const leaderboard = data;
       leaderboard.sort((a, b) => b.score - a.score);
 
-      setTopThree(leaderboard.slice(0, 3));
+      setTopThree([...leaderboard.slice(0, 3), ...leaderboard.slice(0, 3)]);
       setOtherUsers(leaderboard.slice(3));
     },
     onError: (data) => {},
@@ -81,24 +81,41 @@ export default function Leaderboard() {
             >
               {topThree?.at(1) && (
                 <>
-                  <Avatar
-                    bg={"#fff"}
-                    size={"80px"}
-                    borderColor={"#50A4CC"}
-                    borderWidth={5}
-                    position={"absolute"}
-                    top={-60}
-                    alignSelf={"center"}
-                    source={{
-                      uri: `https://picsum.photos/id/${Math.floor(
-                        Math.random() * 100
-                      )}/80`,
-                    }}
-                  >
-                    <Text color={"#000"} fontFamily={"heading"} fontSize={24}>
-                      {"RW"}
-                    </Text>
-                  </Avatar>
+                  <Box position={"absolute"} alignSelf={"center"} top={-60}>
+                    <Avatar
+                      bg={"#fff"}
+                      size={"80px"}
+                      borderColor={"#50A4CC"}
+                      borderWidth={5}
+                      source={{
+                        uri: `https://picsum.photos/id/${Math.floor(
+                          Math.random() * 100
+                        )}/80`,
+                      }}
+                    >
+                      <Text color={"#000"} fontFamily={"heading"} fontSize={24}>
+                        {"RW"}
+                      </Text>
+                    </Avatar>
+                    <Box
+                      size="20px"
+                      bg="#50A4CC"
+                      position={"absolute"}
+                      bottom={-4}
+                      left={"40%"}
+                      zIndex={2}
+                      borderRadius={4}
+                      style={{ transform: [{ rotate: "45deg" }] }}
+                    >
+                      <Text
+                        alignSelf={"center"}
+                        color={"#fff"}
+                        style={{ transform: [{ rotate: "320deg" }] }}
+                      >
+                        2
+                      </Text>
+                    </Box>
+                  </Box>
                   <Text
                     color={"#50A4CC"}
                     fontFamily={"body"}
@@ -126,24 +143,42 @@ export default function Leaderboard() {
             >
               {topThree?.at(2) && (
                 <>
-                  <Avatar
-                    bg={"#fff"}
-                    size={"80px"}
-                    borderColor={"brand.orange"}
-                    borderWidth={5}
-                    position={"absolute"}
-                    top={-60}
-                    alignSelf={"center"}
-                    source={{
-                      uri: `https://picsum.photos/id/${Math.floor(
-                        Math.random() * 100
-                      )}/80`,
-                    }}
-                  >
-                    <Text color={"#000"} fontFamily={"heading"} fontSize={24}>
-                      {"RW"}
-                    </Text>
-                  </Avatar>
+                  <Box alignSelf={"center"} position={"absolute"} top={-60}>
+                    <Avatar
+                      bg={"#fff"}
+                      size={"80px"}
+                      borderColor={"brand.orange"}
+                      alignSelf={"center"}
+                      borderWidth={5}
+                      source={{
+                        uri: `https://picsum.photos/id/${Math.floor(
+                          Math.random() * 100
+                        )}/80`,
+                      }}
+                    >
+                      <Text color={"#000"} fontFamily={"heading"} fontSize={24}>
+                        {"RW"}
+                      </Text>
+                    </Avatar>
+                    <Box
+                      size="20px"
+                      bg="brand.orange"
+                      position={"absolute"}
+                      bottom={-4}
+                      left={"40%"}
+                      zIndex={2}
+                      borderRadius={4}
+                      style={{ transform: [{ rotate: "45deg" }] }}
+                    >
+                      <Text
+                        alignSelf={"center"}
+                        color={"#fff"}
+                        style={{ transform: [{ rotate: "320deg" }] }}
+                      >
+                        3
+                      </Text>
+                    </Box>
+                  </Box>
                   <Text
                     color={"brand.orange"}
                     fontFamily={"body"}
@@ -187,28 +222,43 @@ export default function Leaderboard() {
                 space={2}
               >
                 <FontAwesome5 name="crown" size={28} color="#FED24F" />
-                <Avatar
-                  bg={"#ffff"}
-                  size={"80px"}
-                  borderColor={"brand.yellow"}
-                  borderWidth={5}
-                  alignSelf={"center"}
-                  source={{
-                    uri: `https://picsum.photos/id/${Math.floor(
-                      Math.random() * 100
-                    )}/80`,
-                  }}
-                >
-                  <Text color={"#000"} fontFamily={"heading"} fontSize={24}>
-                    {"RW"}
-                  </Text>
-                  <Avatar.Badge
-                    bg={"brand.yellow"}
-                    size={"20px"}
+                <Box>
+                  <Avatar
+                    bg={"#ffff"}
+                    size={"80px"}
+                    borderColor={"brand.yellow"}
+                    borderWidth={5}
+                    alignSelf={"center"}
+                    source={{
+                      uri: `https://picsum.photos/id/${Math.floor(
+                        Math.random() * 100
+                      )}/80`,
+                    }}
+                  >
+                    <Text color={"#000"} fontFamily={"heading"} fontSize={24}>
+                      {"RW"}
+                    </Text>
+                  </Avatar>
+                  <Box
+                    size="20px"
+                    bg="brand.yellow"
                     position={"absolute"}
-                    bottom={0}
-                  ></Avatar.Badge>
-                </Avatar>
+                    bottom={-4}
+                    left={"40%"}
+                    zIndex={2}
+                    borderRadius={4}
+                    style={{ transform: [{ rotate: "45deg" }] }}
+                  >
+                    <Text
+                      alignSelf={"center"}
+                      color={"#fff"}
+                      fontFamily={"heading"}
+                      style={{ transform: [{ rotate: "320deg" }] }}
+                    >
+                      1
+                    </Text>
+                  </Box>
+                </Box>
               </VStack>
               <Text
                 color={"brand.yellow"}

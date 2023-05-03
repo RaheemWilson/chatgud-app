@@ -19,7 +19,7 @@ import InputBox from "../input/Input";
 
 type Props = {
   assets: any;
-  navigation: any
+  navigation: any;
 };
 
 const StepThree = (props: Props) => {
@@ -30,7 +30,7 @@ const StepThree = (props: Props) => {
   } = useFormContext();
   const toast = useToast();
   const { registerUser } = useAuth();
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <>
       <HStack
@@ -50,17 +50,25 @@ const StepThree = (props: Props) => {
         )}
         <Box position={"relative"}>
           <ChatSvg color={"#00A15C"} />
-          <Text
-            fontSize={"19px"}
-            style={styles.mediumText}
+          <Box
             position={"absolute"}
-            textAlign={"center"}
-            top={"30px"}
-            left={"15px"}
-            color={"#fff"}
+            top={0}
+            bottom={0}
+            right={0}
+            left={0}
+            alignItems={"center"}
+            justifyContent={"center"}
           >
-            {"Yayy, let's get \n you registered!"}
-          </Text>
+            <Text
+              fontSize={"19px"}
+              style={styles.mediumText}
+              textAlign={"center"}
+              alignSelf={"center"}
+              color={"#fff"}
+            >
+              {"Yayy, let's get \n you registered!"}
+            </Text>
+          </Box>
         </Box>
       </HStack>
       <Divider mt={12} mx={"auto"} width={"95%"} bg={"gray.200"} />
@@ -177,9 +185,9 @@ const StepThree = (props: Props) => {
           onPress={handleSubmit(async (data) => {
             try {
               console.log(data);
-              setIsLoading(true)
+              setIsLoading(true);
               await registerUser(data as CreateUser);
-              props.navigation.navigate('Welcome')
+              props.navigation.navigate("Welcome");
             } catch (error) {
               console.log(error);
               toast.show({
@@ -189,7 +197,7 @@ const StepThree = (props: Props) => {
                 colorScheme: "green",
               });
             }
-            setIsLoading(false)
+            setIsLoading(false);
           })}
           isLoading={isLoading}
         >

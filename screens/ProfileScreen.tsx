@@ -64,6 +64,28 @@ export default function ProfileScreen({ navigation }: RootStackScreenProps<"Prof
               <Ionicons name="chevron-forward" size={24} color="#505168" />
             </HStack>
           </Pressable>
+          <Pressable py={2}>
+            <HStack justifyContent={"space-between"} alignItems={"center"}>
+              <HStack space={5} alignItems={"center"}>
+                <Content />
+                <Text color={"brand.gray"} fontSize={"18px"}>
+                  Privacy Policy
+                </Text>
+              </HStack>
+              <Ionicons name="chevron-forward" size={24} color="#505168" />
+            </HStack>
+          </Pressable>
+          <Pressable py={2}>
+            <HStack justifyContent={"space-between"} alignItems={"center"}>
+              <HStack space={5} alignItems={"center"}>
+                <Content />
+                <Text color={"brand.gray"} fontSize={"18px"}>
+                  Frequently Asked Questions
+                </Text>
+              </HStack>
+              <Ionicons name="chevron-forward" size={24} color="#505168" />
+            </HStack>
+          </Pressable>
         </VStack>
         <Button
           marginTop={"auto"}

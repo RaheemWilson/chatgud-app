@@ -57,17 +57,16 @@ const AudioOptionComponent = (props: Props) => {
               alt="ChatGud mascot"
               height={"130px"}
               width={"75px"}
+              mr={8}
             />
             <Box>
               <Box position={"relative"}>
                 <ChatSvg
                   color={"#FFD152"}
-                  width="230px"
-                  height="140px"
                   transform={[
                     { scale: "1.2" },
-                    { translateX: "30" },
-                    { translateY: "10" },
+                    // { translateX: "30" },
+                    // { translateY: "10" },
                   ]}
                 />
                 <Box
@@ -163,14 +162,14 @@ const AudioOptionComponent = (props: Props) => {
                   >
                     <Box>
                       <Text
-                        fontSize={"18px"}
+                        fontSize={"16px"}
                         color={
                           answer === choice.id ? "brand.black" : "brand.gray"
                         }
                         fontFamily={"body"}
                         alignSelf={"flex-start"}
                       >
-                        {`Option ${index + 1}`}
+                        {`Option ${index + 1} ${isCorrect ? ": "+choice.name : ""}`}
                       </Text>
                     </Box>
                   </Pressable>

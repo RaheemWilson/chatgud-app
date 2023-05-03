@@ -1,5 +1,5 @@
-import { Box, Text, Image, HStack } from "native-base";
-import React, { useEffect, useRef } from "react";
+import { Box, Text, Image, HStack, Button } from "native-base";
+import React, { useEffect, useRef, useState } from "react";
 import { Task } from "../../types/Task";
 import ChatSvg from "../svgs/Chat";
 import AudioPlayback from "../audio/AudioPlayback";
@@ -7,6 +7,7 @@ import { Animated, StyleSheet } from "react-native";
 import Microphone from "../audio/Microphone";
 import { useAuth } from "../../context/Auth";
 import { Fontisto, Ionicons } from "@expo/vector-icons";
+import Crowns from "../svgs/crowns";
 
 type Props = {
   task: Task;
@@ -20,6 +21,7 @@ const AudioComponent = (props: Props) => {
   const task = props.task;
   const [sound, setSound] = React.useState();
   const slideAnim = useRef(new Animated.Value(100)).current;
+  const [stylesResult, setStyles] = useState<any>();
 
   useEffect(() => {
     if (props.isOpen) {
@@ -36,29 +38,47 @@ const AudioComponent = (props: Props) => {
     props.mutate({ audio: soundUri });
   };
 
-  const renderResult = () => {
-    const answer = 1;
-
-    if(answer == 1){
-      return {
-        "heading": "Well done",
-        "subheading": "Yu a gwaan gud!",
-        "color": "#FFD152",
-        "count": 3
-      }
+  const renderResult = (answer?: number) => {
+    if (answer == 1) {
+      setStyles({
+        heading: "Well done",
+        subheading: "Yu a gwaan gud!",
+        color: "#FFD152",
+        count: 3,
+      });
     }
 
-    if(answer == 2){
-      return {
-        "heading": "Well done",
-        "subheading": "Yu a gwaan gud!",
-        "color": "#FFD152",
-        "count": 3
-      }
+    if (answer == 2) {
+      setStyles({
+        heading: "Almost there",
+        subheading: "Dat can gwaan!",
+        color: "#50A4CC",
+        count: 2,
+      });
     }
-    
-  }
 
+    if (answer == 3) {
+      setStyles({
+        heading: "Not quite",
+        subheading: "Just practice likkle more",
+        color: "#FF8A5C",
+        count: 1,
+      });
+    }
+
+    if (!answer)
+      setStyles({
+        heading: "Loading...",
+        subheading: "",
+        color: "#009557",
+        count: 0,
+      });
+  };
+
+  useEffect(() => {
+    renderResult(Math.floor(Math.random()*3))
+  }, [])
+  
   return (
     <Animated.View
       style={{
@@ -184,8 +204,8 @@ const AudioComponent = (props: Props) => {
           >
             YOUR SCORE
           </Text>
-          <Box>
-            <Text
+          <Box my={1}>
+            {/* <Text
               fontFamily={"heading"}
               fontSize={"16px"}
               color={"brand.yellow"}
@@ -193,7 +213,8 @@ const AudioComponent = (props: Props) => {
               textAlign={"center"}
             >
               Loading ...
-            </Text>
+            </Text> */}
+            <Crowns color={stylesResult.color} count={stylesResult.count}/>
           </Box>
           <HStack
             mt={6}
@@ -209,19 +230,19 @@ const AudioComponent = (props: Props) => {
               alt="ChatGud mascot"
               height={"280px"}
               width={"160px"}
-              left={1}
+              left={-20}
               style={{ transform: [{ rotate: "340deg" }] }}
             />
-            <Box bottom={4} right={1}>
+            <Box bottom={0} right={1}>
               <Box position={"relative"}>
                 <ChatSvg
-                  color={"#00A15C"}
-                  width="230px"
-                  height="140px"
+                  color={stylesResult.color}
+                  // width="230px"
+                  // height="140px"
                   transform={[
                     { scale: "1.3" },
-                    { translateX: "30" },
-                    { translateY: "10" },
+                    // { translateX: "30" },
+                    // { translateY: "10" },
                   ]}
                 />
                 <Box
@@ -234,16 +255,26 @@ const AudioComponent = (props: Props) => {
                   justifyContent={"center"}
                 >
                   <Text
-                    fontSize={"30px"}
-                    fontFamily={"Rubik-Medium"}
+                    fontSize={"50px"}
+                    fontFamily={"Growth-Period"}
                     textAlign={"center"}
                     alignSelf={"center"}
-                    lineHeight={"34px"}
+                    lineHeight={"50px"}
+                    color="#fff"
+                  >
+                    {stylesResult.heading}
+                  </Text>
+                 {stylesResult.subheading.length > 0 && <Text
+                    fontSize={"20px"}
+                    fontFamily={"heading"}
+                    textAlign={"center"}
+                    alignSelf={"center"}
+                    lineHeight={"28px"}
                     color="#fff"
                     textTransform={"capitalize"}
                   >
-                    Loading...
-                  </Text>
+                    {stylesResult.subheading}
+                  </Text>}
                 </Box>
               </Box>
             </Box>

@@ -3,7 +3,7 @@ import Svg, { SvgProps, Path, type TransformObject } from "react-native-svg";
 
 const ChatSvg = (props: SvgProps & any) => (
   <Svg
-    width={props.width ?? 206}
+    width={props.width ?? 180}
     height={props.width ?? 127}
     fill="none"
     {...props}

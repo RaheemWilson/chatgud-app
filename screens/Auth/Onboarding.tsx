@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { CreateUser } from "../../types/Auth";
 import StepTwo from "../../components/steps/StepTwo";
+import Constants from "expo-constants";
 
 const schema = z.object({
   email: z.string().email(),
@@ -49,7 +50,7 @@ export default function OnboardingScreen({
   return (
     <FormProvider {...methods}>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-        <Box flex={1} py={2} px={2} bgColor={"#fff"}>
+        <Box flex={1} pt={`${Constants.statusBarHeight}px`} pb={2} px={2} bgColor={"#fff"}>
           <HStack alignItems={"center"} justifyContent={"space-between"}>
             <IconButton
               icon={

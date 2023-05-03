@@ -9,10 +9,11 @@ import {
   Divider,
   Image,
   Input,
+  KeyboardAvoidingView,
 } from "native-base";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import CountryPicker from "react-native-country-picker-modal";
 import ChatSvg from "../svgs/Chat";
 
@@ -31,7 +32,7 @@ const StepOne = (props: Props) => {
 
   const values = watch();
   return (
-    <>
+    <KeyboardAvoidingView flex={1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <HStack alignItems={"flex-start"} justifyContent={"center"} space={5}>
         {props.assets && (
           <Image
@@ -44,17 +45,25 @@ const StepOne = (props: Props) => {
         )}
         <Box position={"relative"}>
           <ChatSvg color={"#00A15C"} />
-          <Text
-            fontSize={"19px"}
-            style={styles.mediumText}
+          <Box
             position={"absolute"}
-            textAlign={"center"}
-            top={"30px"}
-            left={"15px"}
-            color={"#fff"}
+            top={0}
+            bottom={0}
+            right={0}
+            left={0}
+            alignItems={"center"}
+            justifyContent={"center"}
           >
-            {"Tell us more \n about yourself."}
-          </Text>
+            <Text
+              fontSize={"19px"}
+              style={styles.mediumText}
+              textAlign={"center"}
+              alignSelf={"center"}
+              color={"#fff"}
+            >
+              {"Tell us more \n about yourself."}
+            </Text>
+          </Box>
         </Box>
       </HStack>
       <Divider mt={12} mx={"auto"} width={"95%"} bg={"gray.200"} />
@@ -138,8 +147,8 @@ const StepOne = (props: Props) => {
                       mt={2}
                       py={2}
                       px={4}
-                      keyboardType={'numeric'}
-                      fontSize={20}
+                      keyboardType={"numeric"}
+                      fontSize={18}
                       placeholder="Your age"
                       variant={"unstyled"}
                       _focus={{
@@ -180,7 +189,7 @@ const StepOne = (props: Props) => {
           </Text>
         </Button>
       </Box>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet } from "react-native";
+import { ImageBackground, SafeAreaView, StyleSheet } from "react-native";
 import { RootStackParamList, RootStackScreenProps } from "../types";
 import { Box, Button, VStack, Image, Heading, Text } from "native-base";
 
@@ -6,6 +6,7 @@ import { useAuth } from "../context/Auth";
 import { Asset, useAssets } from "expo-asset";
 import ChatSvg from "../components/svgs/Chat";
 import Layout from "../constants/Layout";
+import Constants from "expo-constants";
 
 export default function HomeScreen({
   navigation,
@@ -15,26 +16,39 @@ export default function HomeScreen({
 
   return (
     <ImageBackground source={bg} style={styles.image}>
-      <Box flex={1} p={0} position={"relative"}>
-        <Box right={"-180px"} top={130} width={"100%"} position={"absolute"}>
-          <Box>
+      <Box
+        flex={1}
+        px={0}
+        pt={`${Constants.statusBarHeight + 10}px`}
+        position={"relative"}
+      >
+        <Box right="16px" top={140} position={"absolute"}>
+          <Box position={"relative"}>
             <ChatSvg color={"#fff"} />
-            <Text
-              fontSize={"19px"}
-              style={styles.mediumText}
+            <Box
               position={"absolute"}
-              textAlign={"center"}
-              top={"30%"}
-              left={"15px"}
-              color={"brand.black"}
+              top={0}
+              bottom={0}
+              right={0}
+              left={0}
+              alignItems={"center"}
+              justifyContent={"center"}
             >
-              {"Hi, I'm Patty, \n Your Patois Pal!"}
-            </Text>
+              <Text
+                fontSize={"19px"}
+                style={styles.mediumText}
+                textAlign={"center"}
+                alignSelf={"center"}
+                color={"brand.gray"}
+              >
+                {"Hi, I'm Patty, \nYour Patois Pal!"}
+              </Text>
+            </Box>
           </Box>
         </Box>
         <Box
           background={"#fff"}
-          borderRadius={"40px"}
+          borderTopRadius={"40px"}
           height={"60%"}
           marginTop={"auto"}
           borderStyle={"solid"}

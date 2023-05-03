@@ -143,7 +143,7 @@ export default function EditProfileScreen({
                     py={2}
                     px={4}
                     keyboardType={"numeric"}
-                    fontSize={20}
+                    fontSize={18}
                     placeholder="Your age"
                     variant={"unstyled"}
                     _focus={{
@@ -170,7 +170,7 @@ export default function EditProfileScreen({
           mt={2}
           py={2}
           px={4}
-          fontSize={20}
+          fontSize={18}
           background={"brand.green"}
           onPress={handleSubmit((data) => {
             mutate(data);

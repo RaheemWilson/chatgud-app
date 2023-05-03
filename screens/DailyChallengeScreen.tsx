@@ -59,17 +59,11 @@ export default function DailyChallengeScreen({
             height={"130px"}
             width={"75px"}
             top={5}
+            mr={2}
           />
           <Box>
             <Box position={"relative"}>
-              <ChatSvg
-                color={"#FF8A5C"}
-                transform={[
-                  { scale: "1.2" },
-                  { translateX: "10" },
-                  { translateY: "0" },
-                ]}
-              />
+              <ChatSvg color={"#FF8A5C"} transform={[{ scale: "1.2" }]} />
               <Box
                 position={"absolute"}
                 top={0}
@@ -80,7 +74,7 @@ export default function DailyChallengeScreen({
                 justifyContent={"center"}
               >
                 <Text
-                  fontSize={"42px"}
+                  fontSize={"40px"}
                   fontFamily={"Growth-Period"}
                   textAlign={"center"}
                   alignSelf={"center"}
@@ -124,15 +118,6 @@ export default function DailyChallengeScreen({
               alt="Patty with green background"
               borderRadius={"10px"}
             />
-            {/* <Text
-              fontFamily={"body"}
-              fontSize={"16px"}
-              color={"#525367"}
-              // width={"175px"}
-              //   textAlign={"center"}
-            >
-              {dailyChallenge?.problem.answer.shortDescription}
-            </Text> */}
             <Text fontFamily={"mono"} fontSize={"16px"} color={"#525367"}>
               {dailyChallenge?.problem.answer.longDescription?.split(".")[0]}.
               Here is how it is pronounced:
@@ -143,31 +128,28 @@ export default function DailyChallengeScreen({
             <Box alignSelf={"center"}>
               {audio.length > 0 && <AudioOptionPlayback uri={audio} />}
             </Box>
-            <Text
-              fontFamily={"mono"}
-              fontSize={"16px"}
-              color={"#525367"}
-            >
+            <Text fontFamily={"mono"} fontSize={"16px"} color={"#525367"}>
               Now, try to pronounce the word of the day:
             </Text>
             <Microphone
               setSound={(value: any) => {
                 setSound(value);
-                //   setSound(value);
-                //   setTimeout(() => {
-                //     setTranslation("Wah gwan, me deh yah wah sleep");
-                //   }, 5000);
               }}
             />
           </VStack>
         )}
         {sound && (
           <Box
-            flex={1}
+            // flex={1}
             justifyContent={"center"}
             alignItems={"center"}
             position={"relative"}
             pt={8}
+            height={"75%"}
+            width={"100%"}
+            borderTopRadius={20}
+            // marginTop={"auto"}
+            // bg={"#fff"}
           >
             <Text
               fontFamily={"body"}
@@ -185,17 +167,18 @@ export default function DailyChallengeScreen({
               darkColor="#000"
               width="320px"
             />
-            <Text
-              fontFamily={"body"}
-              fontSize={"16px"}
-              color={"#525367"}
-              width={"175px"}
-              textAlign={"center"}
-              mt="4"
-            >
-              YOUR SCORE
-            </Text>
-            <Box>
+            <VStack justifyContent={"center"} alignItems={"center"} my={4}>
+              <Text
+                fontFamily={"body"}
+                fontSize={"16px"}
+                color={"#525367"}
+                width={"175px"}
+                textAlign={"center"}
+                mt="4"
+              >
+                YOUR SCORE
+              </Text>
+
               <Text
                 fontFamily={"heading"}
                 fontSize={"16px"}
@@ -205,17 +188,18 @@ export default function DailyChallengeScreen({
               >
                 Loading ...
               </Text>
-            </Box>
-            <HStack alignItems={"center"} mt={"8px"}>
-              <Coins />
-              <Text
-                color={"brand.orange"}
-                fontFamily={"body"}
-                fontSize={"34px"}
-              >
-                60
-              </Text>
-            </HStack>
+
+              <HStack alignItems={"center"} mt={"8px"}>
+                <Coins />
+                <Text
+                  color={"brand.orange"}
+                  fontFamily={"body"}
+                  fontSize={"34px"}
+                >
+                  60
+                </Text>
+              </HStack>
+            </VStack>
             <Box
               height={"auto"}
               maxHeight={"260px"}
@@ -224,26 +208,27 @@ export default function DailyChallengeScreen({
               overflow={"scroll"}
               py={4}
               px={6}
+              // bg={"#b2dfcc"}
+              // mt={"auto"}
+              borderTopRadius={20}
             >
               {dailyChallenge?.problem.answer.sampleSentence && (
-                <Box my={2} alignSelf={"center"}>
-                  <HStack alignItems={"center"} justifyContent={"center"} space={2}>
-                    {/* <Fontisto name="paragraph" size={20} color={"#FED24F"} /> */}
-                    <Text
-                      fontFamily={"body"}
-                      fontSize={"16px"}
-                      color={"#525367"}
-                      lineHeight={"34px"}
-                      // color="brand.orange"
-                    >
-                      SAMPLE SENTENCE
-                    </Text>
-                  </HStack>
+                <Box my={2}>
+                  <Text
+                    fontFamily={"body"}
+                    fontSize={"16px"}
+                    color={"#525367"}
+                    lineHeight={"34px"}
+                    textAlign={"center"}
+                  >
+                    SAMPLE SENTENCE
+                  </Text>
                   <Text
                     fontSize={"16px"}
-                    fontFamily={"heading"}
+                    fontFamily={"body"}
                     lineHeight={"19px"}
-                    color="brand.orange"
+                    color="brand.green"
+                    textAlign={"center"}
                   >
                     {dailyChallenge?.problem.answer.sampleSentence}.
                   </Text>

@@ -49,17 +49,25 @@ const StepTwo = (props: Props) => {
         )}
         <Box position={"relative"}>
           <ChatSvg color={"#00A15C"} />
-          <Text
-            fontSize={"18px"}
-            style={styles.mediumText}
+          <Box
             position={"absolute"}
-            textAlign={"center"}
-            top={"20px"}
-            left={"2px"}
-            color={"#fff"}
+            top={0}
+            bottom={0}
+            right={0}
+            left={0}
+            alignItems={"center"}
+            justifyContent={"center"}
           >
-            {"How much \n Jamaican patois do you know?"}
-          </Text>
+            <Text
+              fontSize={"19px"}
+              style={styles.mediumText}
+              textAlign={"center"}
+              alignSelf={"center"}
+              color={"#fff"}
+            >
+              {"How much \n Jamaican patois do you know?"}
+            </Text>
+          </Box>
         </Box>
       </HStack>
       <Divider mt={12} mx={"auto"} width={"95%"} bg={"gray.200"} />
@@ -92,18 +100,14 @@ const StepTwo = (props: Props) => {
                                   borderColor: "brand.yellow",
                                   backgroundColor: "rgba(254,210,79, 0.2)",
                                   // color: "brand.black",
-                                  borderWidth: 2
+                                  borderWidth: 2,
                                 }
                               : {
                                   borderColor: "gray.200",
-                                  borderWidth: 1
+                                  borderWidth: 1,
                                 })}
                           >
-                            <HStack
-                              flex={1}
-                              alignItems={"center"}
-                              space={2}
-                            >
+                            <HStack flex={1} alignItems={"center"} space={2}>
                               <HStack>
                                 {Array(level.preferenceOrder)
                                   .fill(0)
@@ -130,7 +134,11 @@ const StepTwo = (props: Props) => {
                               </HStack>
                               <Text
                                 fontSize={"18px"}
-                                color={value === level.id ? "brand.black" : "brand.gray"}
+                                color={
+                                  value === level.id
+                                    ? "brand.black"
+                                    : "brand.gray"
+                                }
                                 style={styles.mediumText}
                                 flex={1}
                                 flexWrap={"wrap"}
@@ -145,11 +153,11 @@ const StepTwo = (props: Props) => {
                 );
               }}
             />
-             <FormControl.ErrorMessage>
-                <Text style={styles.inValid}>
-                  Please select a preference before you continue.
-                </Text>
-              </FormControl.ErrorMessage>
+            <FormControl.ErrorMessage>
+              <Text style={styles.inValid}>
+                Please select a preference before you continue.
+              </Text>
+            </FormControl.ErrorMessage>
           </FormControl>
         </Box>
         <Button

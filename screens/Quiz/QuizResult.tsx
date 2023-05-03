@@ -1,6 +1,7 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import { RootStackScreenProps } from "../../types";
-import { Box, Button, VStack, Image, Heading, Text } from "native-base";
+import { Box, Button, VStack, Image, Heading, Text, HStack } from "native-base";
+import Coins from "../../components/svgs/Coins";
 
 export default function QuizResult({
   navigation,
@@ -35,6 +36,12 @@ export default function QuizResult({
           >
             You did well on your quiz!
           </Text>
+          <HStack alignItems={"center"} mt={"8px"}>
+            <Coins />
+            <Text color={"brand.orange"} fontFamily={"body"} fontSize={"34px"}>
+              60
+            </Text>
+          </HStack>
         </VStack>
         <VStack space={3}>
           <Button
