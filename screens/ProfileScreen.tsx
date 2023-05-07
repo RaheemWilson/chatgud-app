@@ -9,6 +9,7 @@ import {
   Button,
   Pressable,
   HStack,
+  Badge,
 } from "native-base";
 import { useAuth } from "../context/Auth";
 import { format, parseISO } from "date-fns";
@@ -16,22 +17,43 @@ import Profile from "../components/svgs/Profile";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import Content from "../components/svgs/Content";
 import { RootStackScreenProps } from "../types";
+import CountryFlag from "react-native-country-flag";
 
-export default function ProfileScreen({ navigation }: RootStackScreenProps<"Profile">) {
+export default function ProfileScreen({
+  navigation,
+}: RootStackScreenProps<"Profile">) {
   const { userData, signOut } = useAuth();
   const { user } = userData!;
   return (
     <Box style={styles.container} bg={"#fff"} py={8} px={4}>
       <VStack alignItems={"center"} space={4} h="90%" w="full">
-        <Avatar bg={"brand.orange"} size={"xl"}>
+        <Avatar
+          bg={"brand.orange"}
+          size={"xl"}
+          source={{
+            uri: `https://picsum.photos/id/${Math.floor(
+              Math.random() * 100
+            )}/80`,
+          }}
+        >
           <Text color={"#fff"} fontFamily={"Rubik-SemiBold"} fontSize={36}>
             {"RW"}
           </Text>
         </Avatar>
         <Box alignItems={"center"}>
-          <Text fontSize={18} color={"brand.gray"} fontFamily={"Rubik-Medium"}>
-            ~{user.username}
-          </Text>
+          <Badge colorScheme="success" variant={"solid"}>
+            {user.proficiency.name.toUpperCase()}
+          </Badge>
+          <HStack alignItems={"center"} space={2}>
+            <Text
+              fontSize={18}
+              color={"brand.gray"}
+              fontFamily={"Rubik-Medium"}
+            >
+              ~{user.username}
+            </Text>
+            <CountryFlag isoCode={user.nationality.toLowerCase()} size={20} />
+          </HStack>
           <Text fontSize={18} color={"brand.gray"} fontFamily={"Rubik-Medium"}>
             {user.email}
           </Text>

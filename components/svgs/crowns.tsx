@@ -23,7 +23,7 @@ const Crowns = (props: SvgProps & { count: number }) => (
           data-name="Vector"
         />
       </G>
-      <G data-name="Icon (Property 1=Crown)" opacity={0.3}>
+      <G data-name="Icon (Property 1=Crown)">
         <Path
           fill={props.count == 3 ? props.color: "#d9d9de"}
           stroke={props.count == 3 ? props.color: "#d9d9de"}

@@ -5,13 +5,14 @@ import ChatSvg from "../components/svgs/Chat";
 import { EvilIcons, FontAwesome, Fontisto, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { RootStackScreenProps } from "../types";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getDailyChallenges } from "../api/Quiz";
 import AudioPlayback from "../components/audio/AudioPlayback";
 import AudioOptionPlayback from "../components/audio/AudioOptionPlayback";
 import { useIsFocused } from "@react-navigation/native";
 import Microphone from "../components/audio/Microphone";
 import Coins from "../components/svgs/Coins";
+import { addChallengeCompleted, getEvaluation } from "../api/Activity";
 
 export default function DailyChallengeScreen({
   navigation,
@@ -22,20 +23,43 @@ export default function DailyChallengeScreen({
   const [sound, setSound] = React.useState();
   const [image, setImage] = React.useState("");
 
+  const { data: dailyChallenge, isLoading } = useQuery(
+    ["daily-challenges"],
+    () => getDailyChallenges(),
+    {
+      onSuccess: (data) => {
+        const media = data?.problem.answer.media.split(" ") as string[];
+        setAudio(media[0]);
+        setImage(media[1]);
+      },
+      onError: (data) => {
+        console.error(data);
+      },
+    }
+  );
+
   const {
-    data: dailyChallenge,
-    isLoading,
-    refetch: fetchQuizTask,
-  } = useQuery(["daily-challenges"], () => getDailyChallenges(), {
-    onSuccess: (data) => {
-      const media = data?.problem.answer.media.split(" ") as string[];
-      setAudio(media[0]);
-      setImage(media[1]);
-    },
-    onError: (data) => {
-      console.log("DATA", data);
-    },
+    data: challengeUpdate,
+    mutate: challengeMutate,
+    isLoading: isChallengeLoading,
+  } = useMutation(addChallengeCompleted, {
+    onSuccess: () => {},
+    onError: () => {},
   });
+
+  const { mutate: evaluationMutate } = useMutation(getEvaluation, {
+    onSuccess: (data) => {
+      handleChallengeUpdate();
+    },
+    onError: () => {},
+  });
+
+  const handleChallengeUpdate = () => {
+    challengeMutate({
+      evaluation: 3, //TODO: needs to change
+      dailyChallengeId: dailyChallenge?.id as string,
+    });
+  };
 
   return (
     <ImageBackground source={bg} style={styles.image}>
@@ -122,9 +146,6 @@ export default function DailyChallengeScreen({
               {dailyChallenge?.problem.answer.longDescription?.split(".")[0]}.
               Here is how it is pronounced:
             </Text>
-            {/* <Text fontFamily={"body"} fontSize={"16px"} color={"#525367"}>
-              Sample sentence: "{dailyChallenge?.problem.answer.sampleSentence}"
-            </Text> */}
             <Box alignSelf={"center"}>
               {audio.length > 0 && <AudioOptionPlayback uri={audio} />}
             </Box>
@@ -134,13 +155,13 @@ export default function DailyChallengeScreen({
             <Microphone
               setSound={(value: any) => {
                 setSound(value);
+                evaluationMutate({ audio: value });
               }}
             />
           </VStack>
         )}
         {sound && (
           <Box
-            // flex={1}
             justifyContent={"center"}
             alignItems={"center"}
             position={"relative"}
@@ -148,8 +169,6 @@ export default function DailyChallengeScreen({
             height={"75%"}
             width={"100%"}
             borderTopRadius={20}
-            // marginTop={"auto"}
-            // bg={"#fff"}
           >
             <Text
               fontFamily={"body"}
@@ -189,16 +208,18 @@ export default function DailyChallengeScreen({
                 Loading ...
               </Text>
 
-              <HStack alignItems={"center"} mt={"8px"}>
-                <Coins />
-                <Text
-                  color={"brand.orange"}
-                  fontFamily={"body"}
-                  fontSize={"34px"}
-                >
-                  60
-                </Text>
-              </HStack>
+              {!isChallengeLoading && (
+                <HStack alignItems={"center"} mt={"8px"}>
+                  <Coins />
+                  <Text
+                    color={"brand.orange"}
+                    fontFamily={"body"}
+                    fontSize={"34px"}
+                  >
+                    {challengeUpdate?.score}
+                  </Text>
+                </HStack>
+              )}
             </VStack>
             <Box
               height={"auto"}

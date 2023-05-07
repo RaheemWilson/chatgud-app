@@ -33,7 +33,7 @@ export default function Leaderboard() {
       const leaderboard = data;
       leaderboard.sort((a, b) => b.score - a.score);
 
-      setTopThree([...leaderboard.slice(0, 3), ...leaderboard.slice(0, 3)]);
+      setTopThree([...leaderboard.slice(0, 3)]);
       setOtherUsers(leaderboard.slice(3));
     },
     onError: (data) => {},
@@ -290,7 +290,7 @@ export default function Leaderboard() {
           p={6}
         >
           <FlatList
-            data={topThree}
+            data={otherUsers}
             ListEmptyComponent={
               <Text color={"gray.400"} textAlign={"center"}>
                 There are not enough users to rank.

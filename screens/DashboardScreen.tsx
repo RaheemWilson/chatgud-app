@@ -118,44 +118,86 @@ export default function DashboardScreen({
             </VStack>
           </Stack>
           <VStack mt="auto" space={4}>
-            <Pressable onPress={() => navigation.navigate("DailyChallenge")}>
-              <Box
-                borderRadius={"12px"}
-                bg={"brand.green"}
-                w="full"
-                height={"150px"}
-              >
-                <Box flex={1} py={2} px={4}>
-                  <Text fontFamily={"body"} color="#fff" fontSize={"24px"}>
-                    Word of the day!
-                  </Text>
-                  <Text
-                    fontFamily={"mono"}
-                    fontSize={17}
-                    lineHeight={"24px"}
-                    color={"#fff"}
-                  >
-                    {`Spice up your language skills with a daily \ndose of Jamaican patois!`}
-                  </Text>
-                </Box>
-                <HStack
-                  mt={"auto"}
-                  borderBottomRadius={"12px"}
-                  height={"45px"}
+            {userOverview?.isDailyChallengeCompleted ? (
+              <Pressable onPress={() => navigation.navigate("Profile")}>
+                <Box
+                  borderRadius={"12px"}
+                  bg={"brand.green"}
                   w="full"
-                  bg={"rgba(0, 0, 0, 0.05)"}
-                  justifyContent={"space-between"}
-                  alignItems={"center"}
-                  py={2}
-                  px={4}
+                  height={"150px"}
                 >
-                  <Text fontFamily={"body"} fontSize={16} color={"#fff"}>
-                    Try our daily challenge
-                  </Text>
-                  <Ionicons name="arrow-forward" size={24} color="#fff" />
-                </HStack>
-              </Box>
-            </Pressable>
+                  <Box flex={1} py={2} px={4}>
+                    <Text fontFamily={"body"} color="#fff" fontSize={"24px"}>
+                      Learning Some More!
+                    </Text>
+                    <Text
+                      fontFamily={"mono"}
+                      fontSize={17}
+                      lineHeight={"24px"}
+                      color={"#fff"}
+                    >
+                      {`View our resources to sharpen your patois vocabulary.`}
+                    </Text>
+                  </Box>
+                  <HStack
+                    mt={"auto"}
+                    borderBottomRadius={"12px"}
+                    height={"45px"}
+                    w="full"
+                    bg={"rgba(0, 0, 0, 0.05)"}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                    py={2}
+                    px={4}
+                  >
+                    <Text fontFamily={"body"} fontSize={16} color={"#fff"}>
+                      View Resources
+                    </Text>
+                    <Ionicons name="arrow-forward" size={24} color="#fff" />
+                  </HStack>
+                </Box>
+              </Pressable>
+            ) : (
+              <Pressable onPress={() => navigation.navigate("DailyChallenge")}>
+                <Box
+                  borderRadius={"12px"}
+                  bg={"brand.green"}
+                  w="full"
+                  height={"150px"}
+                >
+                  <Box flex={1} py={2} px={4}>
+                    <Text fontFamily={"body"} color="#fff" fontSize={"24px"}>
+                      Word of the day!
+                    </Text>
+                    <Text
+                      fontFamily={"mono"}
+                      fontSize={17}
+                      lineHeight={"24px"}
+                      color={"#fff"}
+                    >
+                      {`Spice up your language skills with a daily \ndose of Jamaican patois!`}
+                    </Text>
+                  </Box>
+                  <HStack
+                    mt={"auto"}
+                    borderBottomRadius={"12px"}
+                    height={"45px"}
+                    w="full"
+                    bg={"rgba(0, 0, 0, 0.05)"}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                    py={2}
+                    px={4}
+                  >
+                    <Text fontFamily={"body"} fontSize={16} color={"#fff"}>
+                      Try our daily challenge
+                    </Text>
+                    <Ionicons name="arrow-forward" size={24} color="#fff" />
+                  </HStack>
+                </Box>
+              </Pressable>
+            )}
+
             <Pressable onPress={() => navigation.navigate("ViewQuizzes")}>
               <Box
                 borderRadius={"12px"}

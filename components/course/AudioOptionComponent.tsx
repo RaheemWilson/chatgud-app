@@ -64,7 +64,7 @@ const AudioOptionComponent = (props: Props) => {
                 <ChatSvg
                   color={"#FFD152"}
                   transform={[
-                    { scale: "1.2" },
+                    { scale: "1.3" },
                     // { translateX: "30" },
                     // { translateY: "10" },
                   ]}

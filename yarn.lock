@@ -11434,6 +11434,11 @@ react-native-codegen@^0.70.6:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-country-flag@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/react-native-country-flag/-/react-native-country-flag-1.1.9.tgz#015fa9b4f757f47a800e5f542209e0de27d6836d"
+  integrity sha512-oNeNrx7qf04v75uhqUd9JbqHjAFaH8pSGjoXTincqkSPtwgikH5i+qScBXQUDpuH0SwXgsmgMzecphqeR4015w==
+
 react-native-country-picker-modal@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-2.0.0.tgz#005421303349a81fedf5975e465405bb4b7312d5"

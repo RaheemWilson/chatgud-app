@@ -150,8 +150,11 @@ const CourseScreen = ({
                 backgroundColor={"brand.orange"}
                 fontSize={"16px"}
                 onPress={() => {
+                  console.log("COURSE", step, categoryTasks?.length);
                   if (step === categoryTasks?.length) {
-                    navigation.navigate("LevelCompleted");
+                    navigation.navigate("LevelCompleted", {
+                      score: data?.score,
+                    } as any);
                   } else {
                     setStep(step + 1);
                   }

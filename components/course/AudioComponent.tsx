@@ -237,12 +237,8 @@ const AudioComponent = (props: Props) => {
               <Box position={"relative"}>
                 <ChatSvg
                   color={stylesResult.color}
-                  // width="230px"
-                  // height="140px"
                   transform={[
                     { scale: "1.3" },
-                    // { translateX: "30" },
-                    // { translateY: "10" },
                   ]}
                 />
                 <Box

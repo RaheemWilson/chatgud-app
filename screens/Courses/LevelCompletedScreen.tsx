@@ -1,12 +1,14 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import { RootStackScreenProps } from "../../types";
-import { Box, Button, VStack, Image, Heading, Text } from "native-base";
+import { Box, Button, VStack, Image, Heading, Text, HStack } from "native-base";
+import Coins from "../../components/svgs/Coins";
 
 export default function LevelCompletedScreen({
   navigation,
+  route,
 }: RootStackScreenProps<"LevelCompleted">) {
   const img = require("../../assets/images/mascot.png");
-
+  const { score } = route.params as any;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <Box flex={1} p={4} position={"relative"}>
@@ -35,6 +37,12 @@ export default function LevelCompletedScreen({
           >
             Your have completed this course successfully!
           </Text>
+          <HStack alignItems={"center"} mt={"8px"}>
+            <Coins />
+            <Text color={"brand.orange"} fontFamily={"body"} fontSize={"34px"}>
+              {score}
+            </Text>
+          </HStack>
         </VStack>
         <VStack space={3}>
           <Button
@@ -57,7 +65,7 @@ export default function LevelCompletedScreen({
             backgroundColor={"brand.mint"}
             height={"50px"}
             color={"brand.green"}
-            onPress={() => navigation.navigate("Dashboard")}
+            onPress={() => navigation.navigate("ViewQuizzes")}
           >
             <Text fontSize={16} color={"brand.green"} style={styles.mediumText}>
               Take one of our quizzes!

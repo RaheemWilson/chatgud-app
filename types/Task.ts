@@ -43,4 +43,5 @@ export type UserOverview = {
   quizScore: number;
   challengeScore: number;
   categoryScore: number;
+  isDailyChallengeCompleted: number;
 };

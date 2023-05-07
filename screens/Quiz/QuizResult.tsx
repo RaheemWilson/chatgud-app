@@ -5,8 +5,10 @@ import Coins from "../../components/svgs/Coins";
 
 export default function QuizResult({
   navigation,
+  route,
 }: RootStackScreenProps<"QuizResult">) {
   const img = require("../../assets/images/mascot.png");
+  const { score, questionsCorrect, totalQuestions } = route.params as any;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -25,7 +27,7 @@ export default function QuizResult({
             style={{ transform: [{ rotate: "350deg" }] }}
           />
           <Heading color={"#525367"} fontSize={"36px"}>
-            Big up yuhself! 🥳
+            {questionsCorrect < 2 ? "Yuh try!" : "Big up yuhself! 🥳"}
           </Heading>
           <Text
             fontSize={"16px"}
@@ -34,12 +36,12 @@ export default function QuizResult({
             color={"brand.grey"}
             style={styles.mediumText}
           >
-            You did well on your quiz!
+            You got {questionsCorrect} out of {totalQuestions} questions correct!
           </Text>
           <HStack alignItems={"center"} mt={"8px"}>
             <Coins />
             <Text color={"brand.orange"} fontFamily={"body"} fontSize={"34px"}>
-              60
+              {score}
             </Text>
           </HStack>
         </VStack>

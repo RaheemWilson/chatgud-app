@@ -35,6 +35,11 @@ export const getEvaluation = async (audioData: { audio: string }) => {
   }
 };
 
+type UpdatesResult = {
+  success: boolean;
+  score: number
+}
+
 export const updateCategoryActCompleted = async (levelInfo: {
   proficiencyId: string;
   categoryId: string;
@@ -42,7 +47,7 @@ export const updateCategoryActCompleted = async (levelInfo: {
 }) => {
   try {
     const { data } = await axios.put(`/api/activities/category`, levelInfo);
-    return data;
+    return data as UpdatesResult;
   } catch (error) {
     throw error;
   }
@@ -54,7 +59,19 @@ export const updateQuizCompleted = async (levelInfo: {
 }) => {
   try {
     const { data } = await axios.put(`/api/activities/quiz`, levelInfo);
-    return data;
+    return data as UpdatesResult;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const addChallengeCompleted = async (levelInfo: {
+  dailyChallengeId: string;
+  evaluation: number;
+}) => {
+  try {
+    const { data } = await axios.post(`/api/activities/challenge`, levelInfo);
+    return data as UpdatesResult;
   } catch (error) {
     throw error;
   }

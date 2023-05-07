@@ -80,8 +80,12 @@ const QuizScreen = ({ route, navigation }: RootStackScreenProps<"Quiz">) => {
     mutate: quizMutate,
     isLoading,
   } = useMutation(updateQuizCompleted, {
-    onSuccess: () => {
-      navigation.navigate("QuizResult");
+    onSuccess: (data) => {
+      navigation.navigate("QuizResult", {
+        score: data.score,
+        questionsCorrect: questionsCorrect,
+        totalQuestions: quizTasks?.quizQuestion.length
+      } as any);
     },
     onError: () => {},
   });
