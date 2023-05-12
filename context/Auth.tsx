@@ -56,12 +56,10 @@ const AuthProvider = ({ children }: any) => {
   const signIn = async (userData: LoginModel) => {
     const { data: _userData } = await axios.post(`/api/auth/login`, userData);
 
-    console.log( "Login", _userData);
     const decoded: any = jwt_decode(_userData.token);
     _userData.exp = decoded.exp;
     setUserData(_userData);
 
-    console.log(_userData);
     setToken(_userData.token);
     AsyncStorage.setItem("@UserData", JSON.stringify(_userData));
   };
@@ -70,7 +68,6 @@ const AuthProvider = ({ children }: any) => {
     try {
       const { data: _userData } = await axios.post(`/api/auth/register`, user);
 
-      console.log("SignUP", _userData);
       const decoded: any = jwt_decode(_userData.token);
       _userData.exp = decoded.exp;
       setUserData(_userData);
@@ -90,8 +87,6 @@ const AuthProvider = ({ children }: any) => {
       token,
       exp,
     };
-
-    console.log(data);
 
     setUserData(currentData);
     setToken(currentData.token);

@@ -17,6 +17,28 @@ const Microphone = (props: Props) => {
   const [isRecording, setIsRecording] = useState(false);
   const [permissionResponse, requestPermission] = Audio.usePermissions();
 
+  const presets = {
+    isMeteringEnabled: true,
+    ios: {
+      ...Audio.RecordingOptionsPresets.HIGH_QUALITY.ios,
+    },
+    android: Audio.RecordingOptionsPresets.HIGH_QUALITY.android,
+    web: Audio.RecordingOptionsPresets.HIGH_QUALITY.web,
+  };
+  // const recordingOptions = {
+  //   android: {
+  //     ...Audio.RecordingOptionsPresets.HIGH_QUALITY.android,
+  //     extension: ".wav",
+  //   },
+  //   ios: {
+  //     ...Audio.RecordingOptionsPresets.HIGH_QUALITY.ios,
+  //     extension: ".wav",
+  //   },
+  //   web: {
+  //     ...Audio.RecordingOptionsPresets.HIGH_QUALITY.web
+  //   }
+  // };
+
   async function startRecording() {
     try {
       //TODO: modal to tell user to allow audio in phone
@@ -26,10 +48,10 @@ const Microphone = (props: Props) => {
         playsInSilentModeIOS: true,
       });
 
-      const { recording: newRecording, status } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
-      );
-      props.onStart && props.onStart()
+      const { recording: newRecording, status } =
+        // Audio.RecordingOptionsPresets.HIGH_QUALITY
+        await Audio.Recording.createAsync(presets);
+      props.onStart && props.onStart();
       animation.current?.play();
       setIsRecording(true);
       setRecording(newRecording);

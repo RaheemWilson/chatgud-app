@@ -52,11 +52,11 @@ export default function ProfileScreen({
             >
               ~{user.username}
             </Text>
-            <CountryFlag isoCode={user.nationality.toLowerCase()} size={20} />
           </HStack>
-          <Text fontSize={18} color={"brand.gray"} fontFamily={"Rubik-Medium"}>
+          <Text fontSize={18} color={"brand.gray"} fontFamily={"Rubik-Medium"} mb={2}>
             {user.email}
           </Text>
+          <CountryFlag isoCode={user.nationality.toLowerCase()} size={20} />
           <Text fontSize={14} fontFamily={"mono"} color={"brand.grey"} mt={2}>
             Joined on{" "}
             {format(parseISO(user.dateCreated as string), `MMM dd, yyyy`)}

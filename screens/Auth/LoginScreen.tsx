@@ -165,7 +165,6 @@ export default function LoginScreen({
             background={"brand.green"}
             onPress={handleSubmit(async (data) => {
               try {
-                console.log(data);
                 setIsLoading(true);
                 await signIn(data);
                 navigation.navigate("Tabs");

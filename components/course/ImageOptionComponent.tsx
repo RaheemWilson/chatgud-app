@@ -12,7 +12,7 @@ type Props = {
   isQuiz?: boolean;
 };
 
-const AudioOptionComponent = (props: Props) => {
+const ImageOptionComponent = (props: Props) => {
   const mascot = require("../../assets/images/mascot.png");
   const [answer, setAnswer] = useState("");
   const [isCorrect, setIsCorrect] = useState(false);
@@ -51,43 +51,26 @@ const AudioOptionComponent = (props: Props) => {
     >
       {
         <Box flex={1} justifyContent={"flex-start"} alignItems={"center"}>
+          <Text
+            fontFamily={"body"}
+            fontSize={"16px"}
+            color={"#525367"}
+            width={"80%"}
+            textAlign={"center"}
+          >
+            {task.problem}
+          </Text>
           <HStack mt={8} alignItems={"flex-end"}>
             <Image
-              source={mascot}
+              source={{ uri: task.answer.media.split(" ")[1] }}
               alt="ChatGud mascot"
               height={"130px"}
-              width={"75px"}
-              mr={8}
+              width={"80%"}
+              borderRadius={"10px"}
             />
-            <Box>
-              <Box position={"relative"}>
-                <ChatSvg color={"#FFD152"} transform={[{ scale: "1.3" }]} />
-                <Box
-                  position={"absolute"}
-                  top={0}
-                  bottom={0}
-                  right={0}
-                  left={0}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                >
-                  <Text
-                    fontSize={"18px"}
-                    fontFamily={"Rubik-Medium"}
-                    textAlign={"center"}
-                    alignSelf={"center"}
-                    lineHeight={"24px"}
-                    color="brand.gray"
-                    width={"80%"}
-                  >
-                    {task.problem}
-                  </Text>
-                </Box>
-              </Box>
-            </Box>
           </HStack>
           {answer.length > 0 && (
-            <Box mt={7}>
+            <Box mt={5}>
               <Text
                 fontSize={"20px"}
                 fontFamily={"Rubik-Medium"}
@@ -168,7 +151,7 @@ const AudioOptionComponent = (props: Props) => {
                       </Text>
                     </Box>
                   </Pressable>
-                  <AudioOptionPlayback uri={choice.media} />
+                  <AudioOptionPlayback uri={choice.media.split(" ")[0]} />
                 </HStack>
               );
             })}
@@ -179,7 +162,7 @@ const AudioOptionComponent = (props: Props) => {
   );
 };
 
-export default AudioOptionComponent;
+export default ImageOptionComponent;
 
 const styles = StyleSheet.create({
   center: {

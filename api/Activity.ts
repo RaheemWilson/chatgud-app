@@ -2,7 +2,7 @@ import { Platform } from "react-native";
 import axios from "./axios";
 import mime from "mime";
 
-export const getEvaluation = async (audioData: { audio: string }) => {
+export const getEvaluation = async (audioData: { audio: string, ref: string }) => {
   try {
     const trimmedURI =
       Platform.OS === "android"
@@ -16,6 +16,8 @@ export const getEvaluation = async (audioData: { audio: string }) => {
       type: mime.getType(trimmedURI) as string,
       name: fileName as string,
     } as any);
+
+    form.append("ref_url", audioData.ref)
 
     const data = await axios.post(
       `/api/audio/evaluate`,

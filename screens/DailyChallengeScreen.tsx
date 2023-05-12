@@ -155,7 +155,7 @@ export default function DailyChallengeScreen({
             <Microphone
               setSound={(value: any) => {
                 setSound(value);
-                evaluationMutate({ audio: value });
+                evaluationMutate({ audio: value, ref: audio });
               }}
             />
           </VStack>

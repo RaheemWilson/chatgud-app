@@ -26,6 +26,7 @@ import { getEvaluation, updateCategoryActCompleted } from "../../api/Activity";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 import AudioOptionComponent from "../../components/course/AudioOptionComponent";
+import ImageOptionComponent from "../../components/course/ImageOptionComponent";
 
 const CourseScreen = ({
   route,
@@ -36,6 +37,7 @@ const CourseScreen = ({
   const { completed, categoryId } = route.params as any;
   const [step, setStep] = useState(completed + 1);
   const [showNextButton, setShowNextButton] = useState(false);
+  const [answer, setAnswer] = useState(0)
   const { userData } = useAuth();
 
   const { data: categoryTasks, refetch: fetchCategoryTask } = useQuery(
@@ -60,6 +62,7 @@ const CourseScreen = ({
   const { mutate: evaluationMutate } = useMutation(getEvaluation, {
     onSuccess: (data) => {
       handleCategoryUpdate();
+      setAnswer(Math.floor(Math.random()*3))
     },
     onError: () => {},
   });
@@ -105,12 +108,24 @@ const CourseScreen = ({
           isOpen={step === task.taskOrder}
           mutate={evaluationMutate}
           isLoading={isLoading}
+          answer={answer}
+          setStep={setStep}
         />
       );
     }
     if (task.type === "AUDIO_OPTIONS") {
       return (
         <AudioOptionComponent
+          task={task}
+          isOpen={step === task.taskOrder}
+          updateCategory={handleCategoryUpdate}
+        />
+      );
+    }
+
+    if (task.type === "IMAGE_OPTIONS") {
+      return (
+        <ImageOptionComponent
           task={task}
           isOpen={step === task.taskOrder}
           updateCategory={handleCategoryUpdate}
@@ -150,7 +165,6 @@ const CourseScreen = ({
                 backgroundColor={"brand.orange"}
                 fontSize={"16px"}
                 onPress={() => {
-                  console.log("COURSE", step, categoryTasks?.length);
                   if (step === categoryTasks?.length) {
                     navigation.navigate("LevelCompleted", {
                       score: data?.score,

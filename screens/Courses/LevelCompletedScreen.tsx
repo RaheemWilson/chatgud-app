@@ -53,7 +53,7 @@ export default function LevelCompletedScreen({
             mt={2}
             w="full"
             background={"brand.yellow"}
-            onPress={() => navigation.navigate("Courses")}
+            onPress={() => navigation.navigate("ViewCourses")}
           >
             <Text fontSize={16} color={"brand.gray"} style={styles.mediumText}>
               Continue learning

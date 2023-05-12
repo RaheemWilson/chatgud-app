@@ -184,12 +184,10 @@ const StepThree = (props: Props) => {
           background={"brand.green"}
           onPress={handleSubmit(async (data) => {
             try {
-              console.log(data);
               setIsLoading(true);
               await registerUser(data as CreateUser);
               props.navigation.navigate("Welcome");
             } catch (error) {
-              console.log(error);
               toast.show({
                 title: "Error",
                 description: `There was an error creating your account`,

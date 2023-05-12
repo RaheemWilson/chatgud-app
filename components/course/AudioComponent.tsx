@@ -14,6 +14,8 @@ type Props = {
   isOpen: boolean;
   mutate: Function;
   isLoading: boolean;
+  answer: number;
+  setStep: Function;
 };
 
 const AudioComponent = (props: Props) => {
@@ -35,11 +37,12 @@ const AudioComponent = (props: Props) => {
 
   const handleSubmission = (soundUri: any) => {
     setSound(soundUri);
-    props.mutate({ audio: soundUri });
+    props.mutate({ audio: soundUri, ref: task.answer.media });
   };
 
-  const renderResult = (answer?: number) => {
-    if (answer == 1) {
+  const renderResult = () => {
+    const answer = props.answer;
+    if (answer == 3) {
       setStyles({
         heading: "Well done",
         subheading: "Yu a gwaan gud!",
@@ -57,7 +60,7 @@ const AudioComponent = (props: Props) => {
       });
     }
 
-    if (answer == 3) {
+    if (answer == 1) {
       setStyles({
         heading: "Not quite",
         subheading: "Just practice likkle more",
@@ -76,9 +79,9 @@ const AudioComponent = (props: Props) => {
   };
 
   useEffect(() => {
-    renderResult(Math.floor(Math.random()*3))
-  }, [])
-  
+    renderResult();
+  }, [props.answer]);
+
   return (
     <Animated.View
       style={{
@@ -205,41 +208,44 @@ const AudioComponent = (props: Props) => {
             YOUR SCORE
           </Text>
           <Box my={1}>
-            {/* <Text
-              fontFamily={"heading"}
-              fontSize={"16px"}
-              color={"brand.yellow"}
-              width={"175px"}
-              textAlign={"center"}
-            >
-              Loading ...
-            </Text> */}
-            <Crowns color={stylesResult.color} count={stylesResult.count}/>
+            <Crowns color={stylesResult.color} count={stylesResult.count} />
+            {[1, 2, 0].includes(props.answer) && (
+              <Button
+                variant={"outline"}
+                borderRadius={"50px"}
+                p={1}
+                my={4}
+                onPress={() => {
+                  props.setStep((prev: number) => prev);
+                  setSound(undefined)
+                }}
+              >
+                Try again
+              </Button>
+            )}
           </Box>
           <HStack
-            mt={6}
+            mt={2}
             alignItems={"flex-start"}
             justifyContent={"center"}
             position={"relative"}
             space={0}
             px={4}
-            // borderWidth={1}
           >
             <Image
               source={mascot}
               alt="ChatGud mascot"
               height={"280px"}
               width={"160px"}
-              left={-20}
+              left={-25}
+              top={-20}
               style={{ transform: [{ rotate: "340deg" }] }}
             />
             <Box bottom={0} right={1}>
               <Box position={"relative"}>
                 <ChatSvg
                   color={stylesResult.color}
-                  transform={[
-                    { scale: "1.3" },
-                  ]}
+                  transform={[{ scale: "1.3" }]}
                 />
                 <Box
                   position={"absolute"}
@@ -260,17 +266,19 @@ const AudioComponent = (props: Props) => {
                   >
                     {stylesResult.heading}
                   </Text>
-                 {stylesResult.subheading.length > 0 && <Text
-                    fontSize={"20px"}
-                    fontFamily={"heading"}
-                    textAlign={"center"}
-                    alignSelf={"center"}
-                    lineHeight={"28px"}
-                    color="#fff"
-                    textTransform={"capitalize"}
-                  >
-                    {stylesResult.subheading}
-                  </Text>}
+                  {stylesResult.subheading.length > 0 && (
+                    <Text
+                      fontSize={"20px"}
+                      fontFamily={"heading"}
+                      textAlign={"center"}
+                      alignSelf={"center"}
+                      lineHeight={"28px"}
+                      color="#fff"
+                      textTransform={"capitalize"}
+                    >
+                      {stylesResult.subheading}
+                    </Text>
+                  )}
                 </Box>
               </Box>
             </Box>
