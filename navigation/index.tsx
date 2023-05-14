@@ -198,6 +198,8 @@ function BottomTabNavigator() {
           // borderRadius: 50,
           // position: 'absolute'
           paddingTop: 10,
+          backgroundColor: "#fff",
+          borderTopColor: "#fff"
         },
       }}
     >
@@ -207,7 +209,7 @@ function BottomTabNavigator() {
         options={({ navigation }) => ({
           title: "Home",
           headerShown: false,
-          unmountOnBlur: true,
+          // unmountOnBlur: true,
           tabBarIcon: ({ color, focused }) => {
             return (
               <Ionicons

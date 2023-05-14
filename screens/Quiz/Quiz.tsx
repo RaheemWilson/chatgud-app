@@ -114,16 +114,16 @@ const QuizScreen = ({ route, navigation }: RootStackScreenProps<"Quiz">) => {
   };
 
   const renderTask = (question: QuizQuestion) => {
-    if (question.task.type === "AUDIO") {
-      return (
-        <AudioComponent
-          task={question.task}
-          isOpen={step === question.questionOrder}
-          mutate={evaluationMutate}
-          isLoading={isLoading}
-        />
-      );
-    }
+    // if (question.task.type === "AUDIO") {
+    //   return (
+    //     <AudioComponent
+    //       task={question.task}
+    //       isOpen={step === question.questionOrder}
+    //       mutate={evaluationMutate}
+    //       isLoading={isLoading}
+    //     />
+    //   );
+    // }
     if (question.task.type === "AUDIO_OPTIONS") {
       return (
         <AudioOptionComponent
@@ -155,7 +155,7 @@ const QuizScreen = ({ route, navigation }: RootStackScreenProps<"Quiz">) => {
   };
   return (
     <ImageBackground source={bg} style={styles.image}>
-      <Box flex={1} p={0} pt={Constants.statusBarHeight} position={"relative"}>
+      <Box flex={1} p={0} pt={`${Constants.statusBarHeight}px`} position={"relative"}>
         <HStack
           p={4}
           w="full"

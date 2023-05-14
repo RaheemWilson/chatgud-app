@@ -53,7 +53,7 @@ const SoundOptionComponent = (props: Props) => {
     >
       {
         <Box flex={1} justifyContent={"flex-start"} alignItems={"center"}>
-          <HStack mt={2} mb={6} alignItems={"flex-end"}>
+          <HStack mt={2} mb={2} alignItems={"flex-end"}>
             <Image
               source={mascot}
               alt="ChatGud mascot"

@@ -19,6 +19,7 @@ import Coins from "../components/svgs/Coins";
 import { useQuery } from "@tanstack/react-query";
 import { getUserData } from "../api/Category";
 import { useRefreshOnFocus } from "../hooks/useRefreshOnFocus";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function DashboardScreen({
   navigation,
@@ -31,9 +32,10 @@ export default function DashboardScreen({
     ["user-data"],
     getUserData
   );
-
-  useRefreshOnFocus(fetchUserOverview);
-
+  useFocusEffect(() => {
+    fetchUserOverview()
+  });
+  // useRefreshOnFocus(fetchUserOverview);
   return (
     <ImageBackground source={bg} style={styles.image}>
       <Box pt={`${Constants.statusBarHeight + 30}px`} flex={1}>

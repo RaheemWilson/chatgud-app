@@ -117,7 +117,7 @@ export default function DailyChallengeScreen({
                   color="#fff"
                   textTransform={"capitalize"}
                 >
-                  {`"Patty"`}
+                  {dailyChallenge?.problem.answer.name}
                 </Text>
               </Box>
             </Box>

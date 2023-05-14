@@ -126,7 +126,7 @@ export default function ViewQuizzes({
   };
   return (
     <Box
-      pt={`${Constants.statusBarHeight + 30}px`}
+      pt={`${Constants.statusBarHeight + 10}px`}
       display={"flex"}
       flexDir={"column"}
       justifyContent={"flex-start"}
