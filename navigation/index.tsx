@@ -227,6 +227,7 @@ function BottomTabNavigator() {
         options={{
           headerShown: false,
           title: "Courses",
+          unmountOnBlur: true,
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? "book" : "book-outline"}
