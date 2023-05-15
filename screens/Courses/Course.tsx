@@ -64,7 +64,7 @@ const CourseScreen = ({
   const { mutate: evaluationMutate } = useMutation(getEvaluation, {
     onSuccess: (data) => {
       handleCategoryUpdate();
-      setAnswer(Math.floor(Math.random() * 3));
+      setAnswer(data.prediction);
     },
     onError: () => {},
   });

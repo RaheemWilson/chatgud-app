@@ -22,7 +22,7 @@ export default function HomeScreen({
         pt={`${Constants.statusBarHeight + 10}px`}
         position={"relative"}
       >
-        <Box right="16px" top={140} position={"absolute"}>
+        <Box left="40%" top={160} position={"absolute"}>
           <Box position={"relative"}>
             <ChatSvg color={"#fff"} />
             <Box

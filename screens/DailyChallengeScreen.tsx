@@ -13,6 +13,7 @@ import { useIsFocused } from "@react-navigation/native";
 import Microphone from "../components/audio/Microphone";
 import Coins from "../components/svgs/Coins";
 import { addChallengeCompleted, getEvaluation } from "../api/Activity";
+import Crowns from "../components/svgs/crowns";
 
 export default function DailyChallengeScreen({
   navigation,
@@ -22,6 +23,8 @@ export default function DailyChallengeScreen({
   const [audio, setAudio] = React.useState("");
   const [sound, setSound] = React.useState();
   const [image, setImage] = React.useState("");
+  const [answer, setAnswer] = React.useState(0);
+  const [stylesResult, setStyles] = React.useState<any>();
 
   const { data: dailyChallenge, isLoading } = useQuery(
     ["daily-challenges"],
@@ -47,19 +50,64 @@ export default function DailyChallengeScreen({
     onError: () => {},
   });
 
-  const { mutate: evaluationMutate } = useMutation(getEvaluation, {
-    onSuccess: (data) => {
-      handleChallengeUpdate();
-    },
-    onError: () => {},
-  });
+  const { mutate: evaluationMutate, isLoading: isEvalLoading } = useMutation(
+    getEvaluation,
+    {
+      onSuccess: (data) => {
+        setAnswer(data.prediction)
+        handleChallengeUpdate(data.prediction);
+      },
+      onError: () => {},
+    }
+  );
 
-  const handleChallengeUpdate = () => {
+  const handleChallengeUpdate = (evaluation: number) => {
     challengeMutate({
-      evaluation: 3, //TODO: needs to change
+      evaluation: evaluation, //TODO: needs to change
       dailyChallengeId: dailyChallenge?.id as string,
     });
   };
+
+  const renderResult = () => {
+    if (answer == 3) {
+      setStyles({
+        heading: "Well done",
+        subheading: "Yu a gwaan gud!",
+        color: "#FFD152",
+        count: 3,
+      });
+    }
+
+    if (answer == 2) {
+      setStyles({
+        heading: "Almost there",
+        subheading: "Dat can gwaan!",
+        color: "#50A4CC",
+        count: 2,
+      });
+    }
+
+    if (answer == 1) {
+      setStyles({
+        heading: "Not quite",
+        subheading: "Just practice likkle more",
+        color: "#FF8A5C",
+        count: 1,
+      });
+    }
+
+    if (!answer)
+      setStyles({
+        heading: "Loading...",
+        subheading: "",
+        color: "#009557",
+        count: 0,
+      });
+  };
+
+  React.useEffect(() => {
+    renderResult();
+  }, [answer]);
 
   return (
     <ImageBackground source={bg} style={styles.image}>
@@ -160,7 +208,7 @@ export default function DailyChallengeScreen({
             />
           </VStack>
         )}
-        {sound && (
+        {sound && !isEvalLoading && (
           <Box
             justifyContent={"center"}
             alignItems={"center"}
@@ -198,18 +246,34 @@ export default function DailyChallengeScreen({
                 YOUR SCORE
               </Text>
 
-              <Text
-                fontFamily={"heading"}
-                fontSize={"16px"}
-                color={"brand.orange"}
-                width={"175px"}
-                textAlign={"center"}
-              >
-                Loading ...
-              </Text>
-
+              <Crowns color={stylesResult.color} count={stylesResult.count} />
+              <Box alignItems={"center"} justifyContent={"center"} my={4}>
+                <Text
+                  fontSize={"50px"}
+                  fontFamily={"Growth-Period"}
+                  textAlign={"center"}
+                  alignSelf={"center"}
+                  lineHeight={"50px"}
+                  color={stylesResult.color}
+                >
+                  {stylesResult.heading}
+                </Text>
+                {stylesResult.subheading.length > 0 && (
+                  <Text
+                    fontSize={"20px"}
+                    fontFamily={"heading"}
+                    textAlign={"center"}
+                    alignSelf={"center"}
+                    lineHeight={"28px"}
+                    color={stylesResult.color}
+                    textTransform={"capitalize"}
+                  >
+                    {stylesResult.subheading}
+                  </Text>
+                )}
+              </Box>
               {!isChallengeLoading && (
-                <HStack alignItems={"center"} mt={"8px"}>
+                <HStack alignItems={"center"} mt={"1px"}>
                   <Coins />
                   <Text
                     color={"brand.orange"}
@@ -227,10 +291,8 @@ export default function DailyChallengeScreen({
               width={"100%"}
               position={"relative"}
               overflow={"scroll"}
-              py={4}
+              py={0}
               px={6}
-              // bg={"#b2dfcc"}
-              // mt={"auto"}
               borderTopRadius={20}
             >
               {dailyChallenge?.problem.answer.sampleSentence && (

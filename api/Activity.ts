@@ -20,7 +20,7 @@ export const getEvaluation = async (audioData: { audio: string, ref: string }) =
     form.append("ref_url", audioData.ref)
 
     const data = await axios.post(
-      `/api/audio/evaluate`,
+      `/audio/evaluate`,
       { data: form },
       {
         headers: {
