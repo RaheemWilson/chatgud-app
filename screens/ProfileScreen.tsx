@@ -18,6 +18,7 @@ import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import Content from "../components/svgs/Content";
 import { RootStackScreenProps } from "../types";
 import CountryFlag from "react-native-country-flag";
+import * as Linking from 'expo-linking';
 
 export default function ProfileScreen({
   navigation,
@@ -75,7 +76,7 @@ export default function ProfileScreen({
               <Ionicons name="chevron-forward" size={24} color="#505168" />
             </HStack>
           </Pressable>
-          <Pressable py={2}>
+          <Pressable py={2} onPress={() => Linking.openURL(`https://jamaicanpatwah.com/dictionary`)}>
             <HStack justifyContent={"space-between"} alignItems={"center"}>
               <HStack space={5} alignItems={"center"}>
                 <Content />

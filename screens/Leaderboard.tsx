@@ -193,7 +193,7 @@ export default function Leaderboard() {
                     fontSize={14}
                     alignSelf={"center"}
                   >
-                    {topThree?.at(1)?.username ?? ""}
+                    @{topThree?.at(2)?.username ?? ""}
                   </Text>
                 </>
               )}

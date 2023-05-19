@@ -16,6 +16,7 @@ type Props = {
   isLoading: boolean;
   answer: number;
   setStep: Function;
+  setAnswer: Function;
 };
 
 const AudioComponent = (props: Props) => {
@@ -217,6 +218,7 @@ const AudioComponent = (props: Props) => {
                 my={4}
                 onPress={() => {
                   props.setStep((prev: number) => prev);
+                  props.setAnswer(0)
                   setSound(undefined)
                 }}
               >

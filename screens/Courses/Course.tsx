@@ -112,6 +112,7 @@ const CourseScreen = ({
           isLoading={isLoading}
           answer={answer}
           setStep={setStep}
+          setAnswer={setAnswer}
         />
       );
     }
@@ -231,6 +232,7 @@ const CourseScreen = ({
                           score: data?.score,
                         } as any);
                       } else {
+                        setAnswer(0)
                         setStep(step + 1);
                       }
                     }}
