@@ -4,8 +4,10 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
 import { MonoText } from './StyledText';
 import { Text, View } from './Themed';
+import { useAuth } from '../context/Auth';
 
 export default function EditScreenInfo({ path }: { path: string }) {
+  const { signOut } = useAuth()
   return (
     <View>
       <View style={styles.getStartedContainer}>
@@ -32,7 +34,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
       </View>
 
       <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
+        <TouchableOpacity onPress={() => signOut()} style={styles.helpLink}>
           <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
             Tap here if your app doesn't automatically update after making changes
           </Text>
